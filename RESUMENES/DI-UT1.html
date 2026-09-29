@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Arquitectura de la Información y Patrones</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 1.8cm 1.5cm 2cm 1.5cm;
+      @bottom-right {
+        content: counter(page);
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 9pt;
+        color: #64748b;
+      }
+      @bottom-left {
+        content: "Arquitectura de la Información y Patrones";
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 9pt;
+        color: #64748b;
+      }
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 10pt;
+      line-height: 1.5;
+      color: #1e293b;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1.doc-title {
+      font-size: 17pt;
+      font-weight: 700;
+      color: #0f172a;
+      text-align: center;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    p.doc-subtitle {
+      text-align: center;
+      font-size: 10.5pt;
+      color: #15803d;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 25px;
+      border-bottom: 2px solid #16a34a;
+      padding-bottom: 10px;
+    }
+
+    .pdf-section {
+      background-color: #0f172a;
+      color: #ffffff;
+      padding: 8px 14px;
+      font-size: 11.5pt;
+      font-weight: 700;
+      border-radius: 4px;
+      margin-top: 25px;
+      margin-bottom: 15px;
+      page-break-after: avoid;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    h2 {
+      font-size: 11.5pt;
+      color: #15803d;
+      border-bottom: 1.5px solid #e2e8f0;
+      padding-bottom: 4px;
+      margin-top: 18px;
+      margin-bottom: 10px;
+      page-break-after: avoid;
+    }
+
+    h3 {
+      font-size: 10pt;
+      color: #334155;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      page-break-after: avoid;
+    }
+
+    p {
+      margin: 0 0 8px 0;
+      text-align: justify;
+    }
+
+    ul {
+      margin: 0 0 10px 0;
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    .diagram-box {
+      background-color: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-left: 4px solid #16a34a;
+      padding: 10px 14px;
+      margin: 10px 0;
+      font-size: 9pt;
+      border-radius: 2px;
+      page-break-inside: avoid;
+    }
+
+    .diagram-title {
+      font-weight: bold;
+      color: #0f172a;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      font-size: 8.5pt;
+      letter-spacing: 0.5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 8.5pt;
+      page-break-inside: avoid;
+    }
+
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 6px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #f8fafc;
+    }
+
+    pre, code {
+      font-family: 'Consolas', 'Courier New', monospace;
+    }
+
+    pre {
+      background-color: #0f172a;
+      color: #f8fafc;
+      padding: 10px 12px;
+      border-radius: 4px;
+      font-size: 8.5pt;
+      line-height: 1.4;
+      overflow-x: auto;
+      margin: 10px 0;
+      page-break-inside: avoid;
+    }
+
+    p code, li code, td code {
+      background-color: #f1f5f9;
+      color: #15803d;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 8.5pt;
+      border: 1px solid #e2e8f0;
+    }
+
+    .math-formula {
+      text-align: center;
+      background-color: #f8fafc;
+      border: 1px dashed #94a3b8;
+      padding: 8px;
+      margin: 10px 0;
+      font-weight: bold;
+      color: #0f172a;
+      border-radius: 4px;
+      page-break-inside: avoid;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="doc-title">Arquitectura de la Información y Patrones</h1>
+  <p class="doc-subtitle">Estructura, Navegación y Feedback</p>
+
+  <!-- SECCIÓN 1 -->
+  <div class="pdf-section">1. ¿Qué es la Arquitectura de la Información? (AI)</div>
+  <p><strong>Definición:</strong> Es el arte y la ciencia de organizar y etiquetar sitios web, intranets, comunidades en línea y software para apoyar la usabilidad y la capacidad de búsqueda.</p>
+  <p><strong>Objetivo Principal:</strong> Ayudar a los usuarios a encontrar información y completar tareas. Si el usuario no puede encontrarlo, para él, no existe.</p>
+
+  <!-- SECCIÓN 2 -->
+  <div class="pdf-section">2. Técnicas y Herramientas</div>
+  
+  <h3>Card Sorting (Clasificación de Tarjetas)</h3>
+  <ul>
+    <li>Método participativo en el que los usuarios organizan temas en grupos que tengan sentido para ellos.</li>
+    <li>Revela cómo los usuarios estructuran mentalmente la información.</li>
+    <li>Ayuda a decidir nombres de categorías (etiquetado).</li>
+    <li>Puede ser abierto (crean categorías) o cerrado (categorías dadas).</li>
+  </ul>
+
+  <h3>Mapas de Sitio (Sitemaps)</h3>
+  <ul>
+    <li>Funciona como los planos de un arquitecto: define la relación entre páginas y muestra la jerarquía de navegación.</li>
+    <li>Ayuda a identificar contenido faltante o duplicado antes de diseñar pantallas.</li>
+    <li>Representación visual y jerárquica de la estructura de una web.</li>
+  </ul>
+
+  <div class="diagram-box">
+    <div class="diagram-title">Práctica: El Supermercado</div>
+    <ul>
+      <li><strong>1. Analizar:</strong> Revisar la lista desordenada de 30 productos de supermercado disponible en el campus virtual.</li>
+      <li><strong>2. Agrupar:</strong> Realizar un "Card Sorting" abierto agrupando los productos de forma lógica (ej.: Lácteos, Limpieza).</li>
+      <li><strong>3. Etiquetar:</strong> Poner nombre a cada categoría evaluando si son claros y si un usuario entendería dónde buscar "Lejía" o "Galletas".</li>
+    </ul>
+  </div>
+
+  <!-- SECCIÓN 3 -->
+  <div class="page-break"></div>
+  <div class="pdf-section">3. Diseño de Interfaz y Patrones</div>
+
+  <h2>3.1. Affordance y Jerarquía Visual</h2>
+  <ul>
+    <li><strong>Affordance:</strong> Cualidad visual de un objeto que sugiere cómo debe usarse. Un botón debe parecer un botón mediante sombras, bordes o relieve.</li>
+    <li><strong>Jerarquía Visual:</strong> Guía el ojo del usuario hacia lo más importante usando tamaño, color y espacio en blanco.</li>
+  </ul>
+
+  <h2>3.2. Feedback del Sistema</h2>
+  <p>El sistema siempre debe mantener informado al usuario sobre lo que está ocurriendo (1ª Heurística de Nielsen). Sin feedback, el usuario se siente perdido o piensa que la aplicación ha fallado.</p>
+  <ul>
+    <li>Ejemplos: Spinners de carga, vibración háptica, mensajes de "Enviado con éxito" o "Copiado al portapapeles".</li>
+  </ul>
+
+  <div class="diagram-box">
+    <div class="diagram-title">Práctica: Cazadores de Feedback</div>
+    <p>Buscar y navegar por internet para encontrar 3 ejemplos distintos de feedback:</p>
+    <ul>
+      <li>Vibración al fallar contraseña (Háptico).</li>
+      <li>Sonido al enviar mensaje (Auditivo).</li>
+      <li>Cambio de color al pasar el ratón (Visual).</li>
+    </ul>
+  </div>
+
+  <h2>3.3. Ley de Fitts</h2>
+  <p><strong>Tamaño y Distancia:</strong> El tiempo necesario para alcanzar un objetivo (como un botón) depende de la distancia (D) al objetivo y del tamaño (W) del mismo.</p>
+  <div class="math-formula">
+    Conclusión: Los botones importantes deben ser GRANDES y estar CERCA del dedo (o puntero).
+  </div>
+
+  <h2>3.4. Patrones Comunes de Navegación</h2>
+  <ul>
+    <li><strong>Menú Hamburguesa:</strong> Icono de tres líneas para desplegar opciones de navegación.</li>
+    <li><strong>Carrusel / Slider:</strong> Componentes deslizables para mostrar múltiples contenidos destacados.</li>
+    <li><strong>Bottom Navigation:</strong> Barra inferior fija para cambiar rápidamente entre las secciones principales de una aplicación móvil.</li>
+  </ul>
+
+</body>
+</html>
