@@ -122,7 +122,7 @@ public class VentanaLibro extends javax.swing.JFrame {
                 Result.setText(libro.toString());
             }
         } catch (NumberFormatException e) {
-            System.out.println("El numero de paginas debe ser un numero entero");
+            Result.setText("El numero de paginas debe ser un numero entero");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
