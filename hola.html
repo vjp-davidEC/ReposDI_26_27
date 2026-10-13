@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test interactivo · PMYDM Temas 1 y 2</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 2rem 1rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .test-container {
+      max-width: 900px;
+      width: 100%;
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.2);
+      padding: 2rem 2rem 2.5rem;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      text-align: center;
+      color: #0f172a;
+      margin-bottom: 0.25rem;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1rem;
+      color: #15803d;
+      font-weight: 600;
+      border-bottom: 2px solid #16a34a;
+      padding-bottom: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .progress-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+      padding: 0.8rem 1.2rem;
+      border-radius: 60px;
+      margin-bottom: 1.5rem;
+      border: 1px solid #e2e8f0;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #334155;
+    }
+
+    .score-badge {
+      background: #0f172a;
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .question-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 1.5rem 1.8rem;
+      margin-bottom: 1.6rem;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .question-card.correct-highlight {
+      border-left: 8px solid #16a34a;
+      background: #f0fdf4;
+    }
+
+    .question-card.incorrect-highlight {
+      border-left: 8px solid #dc2626;
+      background: #fef2f2;
+    }
+
+    .question-text {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+      display: flex;
+      gap: 0.7rem;
+      align-items: baseline;
+      color: #0f172a;
+    }
+
+    .question-number {
+      background: #0f172a;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 700;
+      width: 26px;
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 0.85rem 1.2rem;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .option:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    .option input[type="radio"] {
+      margin-top: 0.2rem;
+      accent-color: #16a34a;
+      width: 1.2rem;
+      height: 1.2rem;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .option.selected {
+      border-color: #16a34a;
+      background: #f0fdf4;
+    }
+
+    .option.correct-answer {
+      background: #dcfce7;
+      border-color: #16a34a;
+      font-weight: 500;
+    }
+
+    .option.wrong-answer {
+      background: #fee2e2;
+      border-color: #dc2626;
+      text-decoration: line-through;
+      color: #7f1d1d;
+    }
+
+    .feedback {
+      margin-top: 1rem;
+      padding: 0.9rem 1.2rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.correct {
+      background: #dcfce7;
+      border-left: 6px solid #16a34a;
+      color: #14532d;
+    }
+
+    .feedback.incorrect {
+      background: #fee2e2;
+      border-left: 6px solid #dc2626;
+      color: #7f1d1d;
+    }
+
+    .feedback strong {
+      font-weight: 700;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.9rem 2.2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      letter-spacing: 0.3px;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-primary {
+      background: #16a34a;
+      color: white;
+      box-shadow: 0 6px 14px -4px rgba(22, 163, 74, 0.5);
+    }
+
+    .btn-primary:hover {
+      background: #15803d;
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #94a3b8;
+      color: #334155;
+    }
+
+    .btn-outline:hover {
+      background: #f1f5f9;
+    }
+
+    .final-result {
+      margin-top: 2rem;
+      background: #0f172a;
+      color: white;
+      padding: 1.8rem 2rem;
+      border-radius: 20px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: none;
+    }
+
+    .final-result.show {
+      display: block;
+    }
+
+    .final-result span {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #4ade80;
+      display: block;
+      margin-top: 0.4rem;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .mark {
+      font-weight: 700;
+      color: #15803d;
+    }
+
+    .small-note {
+      font-size: 0.85rem;
+      color: #64748b;
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 1rem 0.5rem; }
+      .test-container { padding: 1.2rem 1rem; }
+      .question-card { padding: 1.2rem; }
+      .question-text { font-size: 1rem; }
+      .option { font-size: 0.92rem; padding: 0.7rem 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="test-container" id="testContainer">
+  <h1>PMYDM · Temas 1 y 2</h1>
+  <div class="subtitle">Test de autoevaluación · 25 preguntas</div>
+
+  <div class="progress-bar">
+    <span>📋 Preguntas respondidas: <strong id="answeredCount">0</strong> / 25</span>
+    <span class="score-badge" id="scoreDisplay">✅ 0 aciertos</span>
+  </div>
+
+  <div id="questionsArea"></div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" id="checkBtn">✅ Corregir test</button>
+    <button class="btn btn-outline" id="resetBtn">🔄 Reiniciar</button>
+  </div>
+
+  <div class="final-result" id="finalResult"></div>
+  <div class="small-note">Cada pregunta vale 1 punto. Las respuestas incorrectas no restan.</div>
+</div>
+
+<script>
+  // ============================================================
+  // BANCO DE PREGUNTAS (25) basadas en el HTML
+  // ============================================================
+  const questions = [
+    {
+      question: "¿Quién realizó la primera llamada móvil de la historia y con qué prototipo?",
+      options: [
+        "Martin Cooper con un Motorola DynaTAC 8000X",
+        "Steve Jobs con un iPhone original",
+        "Nokia con el modelo 1011",
+        "Samsung con el SPH-M100"
+      ],
+      correct: 0,
+      explanation: "El Dr. Martin Cooper inventó el primer Sistema de Radio Teléfono y realizó la primera llamada móvil desde un prototipo de Motorola DynaTAC 8000X en 1973."
+    },
+    {
+      question: "¿Cuál fue el primer teléfono móvil comercializado al gran público y a qué precio?",
+      options: [
+        "Motorola MicroTAC 9800X, 2.500 dólares",
+        "Motorola DynaTAC 8000X, 3.995 dólares",
+        "Nokia 1011, 1.200 dólares",
+        "Siemens S10, 4.500 dólares"
+      ],
+      correct: 1,
+      explanation: "En 1982 se pone a la venta el Motorola DynaTAC 8000X, el primer teléfono móvil comercializado al gran público, a un precio de 3.995 dólares de la época."
+    },
+    {
+      question: "¿Qué terminal introdujo por primera vez la pantalla a color en un móvil?",
+      options: [
+        "Nokia 8810",
+        "Siemens S10",
+        "Ericsson T39",
+        "Motorola A845"
+      ],
+      correct: 1,
+      explanation: "En 1997 se presenta el Siemens S10, el primer teléfono móvil dotado con pantalla a color."
+    },
+    {
+      question: "¿Qué modelo fue el primer smartphone con sistema operativo Android?",
+      options: [
+        "Samsung Galaxy S",
+        "HTC Dream",
+        "LG Optimus 2X",
+        "Xiaomi Mi Mix 3 5G"
+      ],
+      correct: 1,
+      explanation: "En 2008 se lanzó comercialmente el primer terminal con sistema operativo Android: el HTC Dream."
+    },
+    {
+      question: "¿Qué dispositivo fue el primero en incorporar conectividad Bluetooth?",
+      options: [
+        "Nokia 7110",
+        "Ericsson T39",
+        "Motorola A845",
+        "Benefon Esc!"
+      ],
+      correct: 1,
+      explanation: "En 2001 llega al mercado el Ericsson T39, primer teléfono móvil con conectividad inalámbrica Bluetooth."
+    },
+    {
+      question: "La densidad de píxeles (PPP/DPI) se calcula mediante la fórmula:",
+      options: [
+        "PPP = (ancho + alto) / diagonal",
+        "PPP = √(ancho² + alto²) / diagonal_pulgadas",
+        "PPP = diagonal / (ancho × alto)",
+        "PPP = (ancho² + alto²) × diagonal"
+      ],
+      correct: 1,
+      explanation: "La fórmula correcta es PPP (DPI) = √(ancho² + alto²) / diagonal_pulgadas."
+    },
+    {
+      question: "Una pantalla de 4 pulgadas con resolución 800×600 px, ¿qué densidad de píxeles tiene?",
+      options: [
+        "200 ppp",
+        "250 ppp",
+        "300 ppp",
+        "142 ppp"
+      ],
+      correct: 1,
+      explanation: "√(800² + 600²) / 4 = 1000 / 4 = 250 ppp. Se visualiza nítida y bien."
+    },
+    {
+      question: "¿Qué tecnología de pantalla se caracteriza por tener polímero autoiluminado y negros puros?",
+      options: [
+        "TFT",
+        "Super LCD",
+        "IPS",
+        "OLED / AMOLED"
+      ],
+      correct: 3,
+      explanation: "La tecnología OLED (Organic Light-Emitting Diode) usa polímero autoiluminado, ofreciendo negros puros absolutos y contraste infinito."
+    },
+    {
+      question: "¿Qué variante de LCD elimina el espacio de aire entre cristal y panel, reduciendo reflejos y mejorando el brillo en exteriores?",
+      options: [
+        "TFT",
+        "IPS",
+        "Super LCD",
+        "AMOLED"
+      ],
+      correct: 2,
+      explanation: "Super LCD elimina el espacio de aire entre cristal y panel; reduce reflejos, consume menos y da el mejor brillo en exteriores."
+    },
+    {
+      question: "¿Qué arquitectura integra CPU, GPU y NPU en una sola pastilla de silicio?",
+      options: [
+        "SoC (System on a Chip)",
+        "Dual-Core",
+        "MicroSD",
+        "ART"
+      ],
+      correct: 0,
+      explanation: "Los dispositivos móviles emplean sistemas SoC (System on a Chip), que integran CPU, GPU y NPU en una sola pastilla de silicio."
+    },
+    {
+      question: "¿Qué sistema operativo móvil está basado en el núcleo Linux y fue adquirido por Google en 2005?",
+      options: [
+        "iOS",
+        "Windows Phone",
+        "Android",
+        "BlackBerry OS"
+      ],
+      correct: 2,
+      explanation: "Android es un sistema operativo móvil basado en el núcleo Linux, adquirido por Google en 2005."
+    },
+    {
+      question: "¿Qué máquina virtual sustituyó a Dalvik a partir de Android 5?",
+      options: [
+        "ART (Android Runtime)",
+        "JVM (Java Virtual Machine)",
+        "DVM (Dalvik Virtual Machine)",
+        "CLR (Common Language Runtime)"
+      ],
+      correct: 0,
+      explanation: "A partir de Android 5, Dalvik (DVM) fue sustituida por ART (Android Runtime)."
+    },
+    {
+      question: "Según StatCounter 2026, ¿cuál es la cuota de mercado de Android en España?",
+      options: [
+        "84,1%",
+        "68,64%",
+        "31,35%",
+        "99,99%"
+      ],
+      correct: 1,
+      explanation: "En España (2026 - StatCounter), Android abarca el 68,64% y iOS el 31,35% (ambos copan el 99,99% del parque total)."
+    },
+    {
+      question: "¿Qué característica define al modelo de código de iOS frente a Android?",
+      options: [
+        "iOS es de código abierto y Android propietario",
+        "Ambos son de código abierto",
+        "iOS es propietario y cerrado; Android es de código abierto",
+        "Android es propietario y iOS es de código abierto"
+      ],
+      correct: 2,
+      explanation: "Android es de código abierto (Open Source); iOS es de código propietario y cerrado, restringido en exclusiva al hardware de Apple."
+    },
+    {
+      question: "¿Qué lenguaje se utiliza principalmente en el ecosistema iOS nativo?",
+      options: [
+        "Java o Kotlin",
+        "Objective-C o Swift",
+        "C# o .NET MAUI",
+        "Dart o JavaScript"
+      ],
+      correct: 1,
+      explanation: "En el ecosistema iOS nativo se utilizan Objective-C o Swift. Java/Kotlin son para Android."
+    },
+    {
+      question: "¿Qué framework multiplataforma utiliza el lenguaje Dart?",
+      options: [
+        "React Native",
+        "Flutter",
+        ".NET MAUI",
+        "Kotlin Multiplatform (KMP)"
+      ],
+      correct: 1,
+      explanation: "Flutter es el framework destacado que utiliza Dart. React Native usa JavaScript, .NET MAUI usa C# y KMP usa Kotlin."
+    },
+    {
+      question: "¿Qué tipo de desarrollo multiplataforma envuelve una aplicación web (HTML, CSS, JS) dentro de un componente de navegación nativo?",
+      options: [
+        "Tipo Multiplataforma Moderna",
+        "Tipo Web View",
+        "Desarrollo nativo puro",
+        "Desarrollo híbrido compilado"
+      ],
+      correct: 1,
+      explanation: "El tipo Web View envuelve una aplicación web clásica dentro del componente de navegación interna de una app nativa. Frameworks: Apache Cordova, Ionic y Capacitor."
+    },
+    {
+      question: "¿Qué perfil profesional se encarga de identificar y extraer las necesidades del cliente y redactar los requisitos funcionales?",
+      options: [
+        "Desarrollador / Programador",
+        "Analista",
+        "Diseñador UX/UI",
+        "Project Manager"
+      ],
+      correct: 1,
+      explanation: "El Analista identifica y extrae las necesidades del cliente, redacta los requisitos funcionales y determina qué debe hacer la aplicación."
+    },
+    {
+      question: "¿Cuál es la fórmula general para estimar el presupuesto de una aplicación móvil?",
+      options: [
+        "Presupuesto = Horas de trabajo × Coste de los perfiles",
+        "Presupuesto = (Horas de trabajo × Coste de los perfiles) + Otros costes",
+        "Presupuesto = Coste de los perfiles / Horas de trabajo",
+        "Presupuesto = Horas de trabajo + Coste de los perfiles"
+      ],
+      correct: 1,
+      explanation: "Presupuesto aproximado = (Horas de trabajo × Coste de los perfiles) + Otros costes."
+    },
+    {
+      question: "¿Qué componente del SDK de Android es imprescindible para conectar el PC con teléfonos físicos por USB?",
+      options: [
+        "Android SDK Build-Tools",
+        "Android Emulator",
+        "Google USB Driver",
+        "Android SDK Platform-Tools"
+      ],
+      correct: 2,
+      explanation: "Google USB Driver es el controlador imprescindible para comunicar el PC con teléfonos físicos Android por USB."
+    },
+    {
+      question: "¿Qué archivo descriptor global informa al sistema de la identidad de la app y los permisos de acceso?",
+      options: [
+        "MainActivity.kt",
+        "strings.xml",
+        "AndroidManifest.xml",
+        "build.gradle.kts"
+      ],
+      correct: 2,
+      explanation: "AndroidManifest.xml es el fichero descriptor global de configuración: informa al sistema de la identidad de la app, componentes y permisos."
+    },
+    {
+      question: "¿Qué archivo dentro de /res/values se emplea para constantes de texto e internacionalización?",
+      options: [
+        "colors.xml",
+        "styles.xml",
+        "strings.xml",
+        "themes.xml"
+      ],
+      correct: 2,
+      explanation: "strings.xml se emplea para constantes de texto e internacionalización (traducción de idiomas)."
+    },
+    {
+      question: "¿Qué genera la clase R en un proyecto Android?",
+      options: [
+        "Los archivos ejecutables .apk",
+        "Constantes enteras (ID) para cada recurso de /res",
+        "Las licencias del SDK",
+        "Las imágenes del emulador"
+      ],
+      correct: 1,
+      explanation: "La clase R genera constantes enteras (ID) para cada recurso de /res (ej. R.string.saludo)."
+    },
+    {
+      question: "¿Cuántas veces hay que pulsar sobre 'Número de compilación' para habilitar las Opciones de Desarrollo?",
+      options: [
+        "3 veces",
+        "5 veces",
+        "7 veces",
+        "10 veces"
+      ],
+      correct: 2,
+      explanation: "Se presiona 7 veces consecutivas sobre 'Número de compilación' hasta que aparezca el aviso de activación."
+    },
+    {
+      question: "¿Cuánto tarda aproximadamente el primer arranque de un emulador Android?",
+      options: [
+        "10 segundos",
+        "30 segundos",
+        "1 minuto y medio",
+        "5 minutos"
+      ],
+      correct: 2,
+      explanation: "El primer inicio tarda aproximadamente 1 minuto y medio (debe reservar y configurar el espacio en disco). Los posteriores unos 30 segundos."
+    }
+  ];
+
+  // ============================================================
+  // LÓGICA DEL TEST
+  // ============================================================
+  const questionsArea = document.getElementById('questionsArea');
+  const answeredCountSpan = document.getElementById('answeredCount');
+  const scoreDisplay = document.getElementById('scoreDisplay');
+  const checkBtn = document.getElementById('checkBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const finalResult = document.getElementById('finalResult');
+
+  let userAnswers = new Array(questions.length).fill(null);
+  let testChecked = false;
+
+  // Renderizar preguntas
+  function renderQuestions() {
+    questionsArea.innerHTML = '';
+    questions.forEach((q, index) => {
+      const card = document.createElement('div');
+      card.className = 'question-card';
+      card.id = `qcard-${index}`;
+
+      const questionText = document.createElement('div');
+      questionText.className = 'question-text';
+      questionText.innerHTML = `<span class="question-number">${index + 1}</span> ${q.question}`;
+      card.appendChild(questionText);
+
+      const optionsDiv = document.createElement('div');
+      optionsDiv.className = 'options';
+
+      q.options.forEach((opt, optIndex) => {
+        const label = document.createElement('label');
+        label.className = 'option';
+        label.id = `opt-${index}-${optIndex}`;
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = `question-${index}`;
+        radio.value = optIndex;
+        radio.dataset.qIndex = index;
+        radio.dataset.optIndex = optIndex;
+
+        radio.addEventListener('change', (e) => {
+          if (testChecked) return; // No permitir cambios después de corregir
+          const qIdx = parseInt(e.target.dataset.qIndex);
+          userAnswers[qIdx] = parseInt(e.target.dataset.optIndex);
+          updateAnsweredCount();
+          // Estilo selección
+          document.querySelectorAll(`#qcard-${qIdx} .option`).forEach(el => el.classList.remove('selected'));
+          label.classList.add('selected');
+        });
+
+        label.appendChild(radio);
+        const span = document.createElement('span');
+        span.textContent = opt;
+        label.appendChild(span);
+        optionsDiv.appendChild(label);
+      });
+
+      card.appendChild(optionsDiv);
+
+      // Feedback container
+      const feedback = document.createElement('div');
+      feedback.className = 'feedback';
+      feedback.id = `feedback-${index}`;
+      card.appendChild(feedback);
+
+      questionsArea.appendChild(card);
+    });
+  }
+
+  function updateAnsweredCount() {
+    const count = userAnswers.filter(a => a !== null).length;
+    answeredCountSpan.textContent = count;
+  }
+
+  function updateScoreDisplay() {
+    if (!testChecked) {
+      scoreDisplay.textContent = `✅ 0 aciertos`;
+      return;
+    }
+    let correct = 0;
+    questions.forEach((q, i) => {
+      if (userAnswers[i] === q.correct) correct++;
+    });
+    scoreDisplay.textContent = `✅ ${correct} aciertos`;
+  }
+
+  // Corregir test
+  function checkTest() {
+    if (testChecked) return;
+
+    // Verificar que todas las preguntas estén respondidas
+    const unanswered = userAnswers.filter(a => a === null).length;
+    if (unanswered > 0) {
+      if (!confirm(`Aún tienes ${unanswered} pregunta(s) sin responder. ¿Quieres corregir de todos modos?`)) {
+        return;
+      }
+    }
+
+    testChecked = true;
+    let correctCount = 0;
+
+    questions.forEach((q, index) => {
+      const selected = userAnswers[index];
+      const card = document.getElementById(`qcard-${index}`);
+      const feedback = document.getElementById(`feedback-${index}`);
+
+      // Limpiar clases previas
+      card.classList.remove('correct-highlight', 'incorrect-highlight');
+      feedback.classList.remove('show', 'correct', 'incorrect');
+
+      // Marcar opciones
+      q.options.forEach((_, optIndex) => {
+        const optLabel = document.getElementById(`opt-${index}-${optIndex}`);
+        optLabel.classList.remove('correct-answer', 'wrong-answer', 'selected');
+        if (optIndex === q.correct) {
+          optLabel.classList.add('correct-answer');
+        }
+        if (selected !== null && optIndex === selected && selected !== q.correct) {
+          optLabel.classList.add('wrong-answer');
+        }
+      });
+
+      // Feedback y resaltado de tarjeta
+      if (selected === null) {
+        card.classList.add('incorrect-highlight');
+        feedback.classList.add('show', 'incorrect');
+        feedback.innerHTML = `<strong>⚠️ Sin responder.</strong> La respuesta correcta es: <strong>${q.options[q.correct]}</strong>.<br>${q.explanation}`;
+      } else if (selected === q.correct) {
+        correctCount++;
+        card.classList.add('correct-highlight');
+        feedback.classList.add('show', 'correct');
+        feedback.innerHTML = `<strong>✅ ¡Correcto!</strong> ${q.explanation}`;
+      } else {
+        card.classList.add('incorrect-highlight');
+        feedback.classList.add('show', 'incorrect');
+        feedback.innerHTML = `<strong>❌ Incorrecto.</strong> La respuesta correcta es: <strong>${q.options[q.correct]}</strong>.<br>${q.explanation}`;
+      }
+    });
+
+    // Deshabilitar todos los radios
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+      radio.disabled = true;
+    });
+
+    // Actualizar puntuación
+    scoreDisplay.textContent = `✅ ${correctCount} aciertos`;
+    updateAnsweredCount();
+
+    // Mostrar resultado final
+    finalResult.classList.add('show');
+    const total = questions.length;
+    const percentage = Math.round((correctCount / total) * 100);
+    let message = '';
+    if (percentage >= 90) message = '¡Excelente! Dominas los conceptos.';
+    else if (percentage >= 70) message = 'Buen trabajo, repasa algunos detalles.';
+    else if (percentage >= 50) message = 'Aprobado justo. Conviene repasar.';
+    else message = 'Necesitas repasar el temario con más detenimiento.';
+    finalResult.innerHTML = `📊 Resultado final: ${correctCount} / ${total} (${percentage}%)<br><span>${message}</span>`;
+
+    // Scroll suave al resultado
+    finalResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Reiniciar test
+  function resetTest() {
+    testChecked = false;
+    userAnswers = new Array(questions.length).fill(null);
+    renderQuestions();
+    updateAnsweredCount();
+    scoreDisplay.textContent = `✅ 0 aciertos`;
+    finalResult.classList.remove('show');
+    finalResult.innerHTML = '';
+    // Rehabilitar radios (ya se recrean)
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Inicializar
+  renderQuestions();
+  updateAnsweredCount();
+
+  checkBtn.addEventListener('click', checkTest);
+  resetBtn.addEventListener('click', resetTest);
+
+  // Actualizar contador cuando se selecciona (ya está en el evento change)
+</script>
+</body>
+</html>
