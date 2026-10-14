@@ -5,9 +5,9 @@ import java.util.Random;
 public class Jefe extends Personaje {
 
     public Jefe() {
-        super("JEFE OSCURO");
-        setVida(30);
-        setVidaMax(30);
+        super("JEFE");
+        setVida(20);
+        setVidaMax(20);
         setFuerza(10);
         setDefensa(4);
     }
@@ -15,10 +15,10 @@ public class Jefe extends Personaje {
     @Override
     public String ataca(Personaje defensor) {
         Random rand = new Random();
-        if (rand.nextInt(100) < 55) {
+        if (rand.nextInt(100) < 50) {
             int danio = calcularDanio(defensor) + 2;
             defensor.setVida(defensor.getVida() - danio);
-            return "- " + getNombre() + " aplasta a " + defensor.getNombre()
+            return getNombre() + " aplasta a " + defensor.getNombre()
                  + " y le quita " + danio + " de vida";
         }
         return "- " + getNombre() + " falla su ataque devastador";
