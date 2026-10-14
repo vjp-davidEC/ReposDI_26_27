@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Arquitectura de la Información y Patrones</title>
+  <title>Diseño de Interfaces - UT1: Arquitectura de la Información, Prototipado y Gestores de Diseño (Layouts)</title>
   <style>
     @page {
       size: A4;
@@ -14,7 +14,7 @@
         color: #64748b;
       }
       @bottom-left {
-        content: "Arquitectura de la Información y Patrones";
+        content: "DI - Tema 01 | Resumen Completo Oficial";
         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         font-size: 9pt;
         color: #64748b;
@@ -90,7 +90,7 @@
       text-align: justify;
     }
 
-    ul {
+    ul, ol {
       margin: 0 0 10px 0;
       padding-left: 20px;
     }
@@ -184,15 +184,18 @@
 </head>
 <body>
 
-  <h1 class="doc-title">Arquitectura de la Información y Patrones</h1>
-  <p class="doc-subtitle">Estructura, Navegación y Feedback</p>
+  <h1 class="doc-title">Diseño de Interfaces - Unidad de Trabajo 1</h1>
+  <p class="doc-subtitle">Arquitectura de la Información, Prototipado y Gestores de Diseño (Layouts)</p>
 
-  <!-- SECCIÓN 1 -->
+  <!-- ========================================== -->
+  <!-- SECCIÓN 1: ARQUITECTURA DE LA INFORMACIÓN  -->
+  <!-- ========================================== -->
+
   <div class="pdf-section">1. ¿Qué es la Arquitectura de la Información? (AI)</div>
   <p><strong>Definición:</strong> Es el arte y la ciencia de organizar y etiquetar sitios web, intranets, comunidades en línea y software para apoyar la usabilidad y la capacidad de búsqueda.</p>
   <p><strong>Objetivo Principal:</strong> Ayudar a los usuarios a encontrar información y completar tareas. Si el usuario no puede encontrarlo, para él, no existe.</p>
 
-  <!-- SECCIÓN 2 -->
+  <!-- SECCIÓN 2: TÉCNICAS Y HERRAMIENTAS -->
   <div class="pdf-section">2. Técnicas y Herramientas</div>
   
   <h3>Card Sorting (Clasificación de Tarjetas)</h3>
@@ -219,7 +222,7 @@
     </ul>
   </div>
 
-  <!-- SECCIÓN 3 -->
+  <!-- SECCIÓN 3: DISEÑO DE INTERFAZ Y PATRONES -->
   <div class="page-break"></div>
   <div class="pdf-section">3. Diseño de Interfaz y Patrones</div>
 
@@ -258,7 +261,7 @@
     <li><strong>Bottom Navigation:</strong> Barra inferior fija para cambiar rápidamente entre las secciones principales de una aplicación móvil.</li>
   </ul>
 
-  <!-- SECCIÓN 4 -->
+  <!-- SECCIÓN 4: PROTOTIPOS -->
   <div class="page-break"></div>
   <div class="pdf-section">4. Prototipos: Concepto, Evaluación y Ventajas</div>
 
@@ -280,7 +283,7 @@
     <li><strong>Aumento de la confianza:</strong> Disminuye la incertidumbre técnica y operativa sobre la viabilidad del proyecto.</li>
   </ul>
 
-  <!-- SECCIÓN 5 -->
+  <!-- SECCIÓN 5: WIREFRAMING Y FIDELIDAD -->
   <div class="page-break"></div>
   <div class="pdf-section">5. Prototipado y Wireframing: El Espectro de Fidelidad</div>
 
@@ -306,6 +309,75 @@
     <li>Está basado en navegador, por lo que funciona en cualquier PC.</li>
     <li>Es multijugador: todo el equipo diseña en el mismo archivo en tiempo real.</li>
   </ul>
+
+  <!-- ========================================== -->
+  <!-- SECCIÓN 6: GESTORES DE DISEÑO (LAYOUTS)    -->
+  <!-- ========================================== -->
+
+  <div class="page-break"></div>
+  <div class="pdf-section">6. Gestores de Diseño (Layouts) en Java Swing</div>
+
+  <h2>6.1. ¿Qué es un Layout?</h2>
+  <p><strong>Definición:</strong> En diseño de interfaces, un <em>layout</em> es el esquema, disposición y organización de los elementos dentro de un espacio, página o interfaz visual. Funciona como un plano arquitectónico que determina la ubicación de cada componente, estableciendo la jerarquía, el equilibrio y el recorrido visual del usuario.</p>
+
+  <div class="diagram-box">
+    <div class="diagram-title">Funciones y Beneficios Clave de los Layouts</div>
+    <ul>
+      <li><strong>Organización de componentes:</strong> Define posiciones automáticas para los elementos dentro del contenedor.</li>
+      <li><strong>Control de redimensionamiento:</strong> Adapta dinámicamente los componentes cuando la ventana cambia de tamaño o resolución.</li>
+      <li><strong>Agilización del desarrollo:</strong> Evita el posicionamiento manual por coordenadas fijas, ahorrando tiempo y reduciendo errores de maquetación.</li>
+    </ul>
+  </div>
+
+  <h2>6.2. Los Tres Layouts Más Utilizados y Recomendados</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 20%;">Gestor de Diseño</th>
+        <th style="width: 30%;">Estructura y Comportamiento</th>
+        <th style="width: 25%;">Características Técnicas</th>
+        <th style="width: 25%;">Caso de Uso Típico</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>BorderLayout</strong></td>
+        <td>Divide el contenedor en 5 regiones cardinales: <code>NORTH</code>, <code>SOUTH</code>, <code>EAST</code>, <code>WEST</code> y <code>CENTER</code>. El centro absorbe todo el espacio sobrante.</td>
+        <td>Es el layout estándar por defecto para ventanas principales (<code>JFrame</code>).</td>
+        <td>Barras de herramientas en los extremos y área de trabajo central.</td>
+      </tr>
+      <tr>
+        <td><strong>FlowLayout</strong></td>
+        <td>Dispone los componentes en un flujo secuencial continuo de izquierda a derecha.</td>
+        <td>Realiza salto de línea automático si no hay espacio horizontal y respeta el tamaño preferido de cada elemento.</td>
+        <td>Grupos de botones simples o paneles de control horizontal.</td>
+      </tr>
+      <tr>
+        <td><strong>GridLayout</strong></td>
+        <td>Organiza los elementos en una cuadrícula estricta y simétrica de filas y columnas.</td>
+        <td>Todas las celdas tienen exactamente el mismo tamaño, forzando a los componentes interiores a redimensionarse.</td>
+        <td>Teclados numéricos, botoneras de calculadoras o tableros.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>6.3. Layouts Avanzados</h2>
+  <ul>
+    <li><strong>GridBagLayout:</strong> Es el gestor más flexible y complejo. Permite construir rejillas donde las celdas pueden tener diferentes tamaños, pesos proporcionales y expandirse horizontal o verticalmente a través de múltiples filas y columnas mediante restricciones.</li>
+    <li><strong>Free Design (Matisse):</strong> Diseñador visual de arrastrar y soltar presente en entornos como NetBeans. Genera código subyacente complejo de forma automática. Aunque facilita bocetos visuales rápidos, suele descartarse en proyectos profesionales por la dificultad de mantener y limpiar su código generado.</li>
+  </ul>
+
+  <h2>6.4. Layouts para Casos Específicos</h2>
+  <ul>
+    <li><strong>CardLayout:</strong> Apila visualmente múltiples paneles o componentes como si fueran una baraja de cartas, mostrando solo uno a la vez. Es ideal para asistentes guiados paso a paso (<em>wizards</em>) o vistas con pestañas personalizadas.</li>
+    <li><strong>BoxLayout:</strong> Permite alinear componentes a lo largo de un único eje unidimensional, organizándolos de manera estricta en una sola fila horizontal o en una sola columna vertical.</li>
+    <li><strong>Null / Absolute Layout:</strong> Desactiva cualquier gestor automático obligando a indicar coordenadas $(x, y)$ y dimensiones fijas manuales para cada elemento. <strong>No permite diseño responsivo</strong>, por lo que la interfaz se descoloca ante cualquier cambio de pantalla o redimensionado.</li>
+  </ul>
+
+  <div class="diagram-box">
+    <div class="diagram-title">Regla de Oro en Diseño de Interfaces Swing</div>
+    <p>La clave para construir interfaces gráficas completas, limpias y adaptativas no radica en buscar un layout único perfecto, sino en <strong>anidar múltiples paneles simples con diferentes layouts</strong> (por ejemplo, un <code>BorderLayout</code> principal que contiene paneles secundarios con <code>FlowLayout</code> o <code>GridLayout</code>).</p>
+  </div>
 
 </body>
 </html>
