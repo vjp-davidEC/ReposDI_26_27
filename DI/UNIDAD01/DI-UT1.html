@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Diseño de Interfaces - UT1: Arquitectura de la Información, Prototipado y Gestores de Diseño (Layouts)</title>
+  <title>Diseño de Interfaces - UT1: Resumen Teórico Oficial</title>
   <style>
     @page {
       size: A4;
@@ -185,7 +185,7 @@
 <body>
 
   <h1 class="doc-title">Diseño de Interfaces - Unidad de Trabajo 1</h1>
-  <p class="doc-subtitle">Arquitectura de la Información, Prototipado y Gestores de Diseño (Layouts)</p>
+  <p class="doc-subtitle">Planteamiento, Arquitectura, Prototipado, Layouts, Patrón MVC y Generación con XML</p>
 
   <!-- ========================================== -->
   <!-- SECCIÓN 1: ARQUITECTURA DE LA INFORMACIÓN  -->
@@ -378,6 +378,246 @@
     <div class="diagram-title">Regla de Oro en Diseño de Interfaces Swing</div>
     <p>La clave para construir interfaces gráficas completas, limpias y adaptativas no radica en buscar un layout único perfecto, sino en <strong>anidar múltiples paneles simples con diferentes layouts</strong> (por ejemplo, un <code>BorderLayout</code> principal que contiene paneles secundarios con <code>FlowLayout</code> o <code>GridLayout</code>).</p>
   </div>
+
+  <!-- ========================================== -->
+  <!-- SECCIÓN 7: PATRÓN MVC EN JAVA SWING        -->
+  <!-- ========================================== -->
+
+  <div class="page-break"></div>
+  <div class="pdf-section">7. El Patrón MVC en Java Swing</div>
+
+  <h2>7.1. ¿Qué es MVC?</h2>
+  <p>Es un patrón de arquitectura de software que separa los datos y la lógica de negocio de una aplicación de su interfaz visual y de la gestión de eventos. Fue descrito originalmente en 1979 por Trygve Reenskaug. Su objetivo principal en Java Swing es garantizar una clara separación entre los datos visuales y la estructura lógica.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 20%;">Componente</th>
+        <th style="width: 45%;">Rol y Responsabilidades</th>
+        <th style="width: 35%;">Analogía / Ejemplo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Modelo (Model)</strong></td>
+        <td>Los datos puros. Variables, listas, almacenamiento en memoria, comunicación con la base de datos y validaciones. Almacena el estado y notifica cambios.</td>
+        <td><strong>Consola de videojuegos:</strong> El cerebro que procesa la lógica y guarda el estado de la partida.</td>
+      </tr>
+      <tr>
+        <td><strong>Vista (View)</strong></td>
+        <td>La interfaz gráfica. Botones, tablas y ventanas dibujadas en pantalla. <strong>No contiene lógica de negocio</strong>; solo representa píxeles.</td>
+        <td><strong>Televisor / Monitor:</strong> Pantalla inerte que únicamente dibuja y proyecta imágenes.</td>
+      </tr>
+      <tr>
+        <td><strong>Controlador (Controller)</strong></td>
+        <td>La acción e intermediario. Captura las peticiones y eventos de clic del usuario, interactúa con el modelo para consultar o modificar datos y actualiza la vista.</td>
+        <td><strong>Mando / Conexión:</strong> Captura las pulsaciones del usuario y conecta el televisor con la consola.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="diagram-box">
+    <div class="diagram-title">Regla de Oro en Componentes Swing: Manipulación de Datos</div>
+    <p><strong>¡Nunca modificamos una tabla directamente!</strong> En Swing, los datos se añaden o modifican siempre sobre el <strong>Modelo</strong> establecido, y posteriormente es el modelo el que notifica a la vista visual (<code>JTable</code>) para que se redibuje y actualice.</p>
+  </div>
+
+  <h2>7.2. Conexión de Componentes y Flujo Dinámico</h2>
+  <p>Para trabajar correctamente con tablas (<code>JTable</code>), listas (<code>JList</code>) o desplegables (<code>JComboBox</code>), se implementa un enlace de dos pasos iniciales seguido del flujo de operaciones dinámicas:</p>
+
+  <ol>
+    <li><strong>Crear el Almacén:</strong> Se instancia el modelo de datos configurando las columnas de cabecera y definiendo cero filas iniciales mediante <code>new DefaultTableModel(...)</code>.</li>
+    <li><strong>Enchufar el Cable:</strong> Se vincula el componente gráfico con su modelo subyacente para que la interfaz escuche sus modificaciones mediante <code>tblContactos.setModel(...)</code>.</li>
+  </ol>
+
+  <h3>Operaciones del Ciclo de Vida Dinámico</h3>
+  <ul>
+    <li><strong>1. Añadir (<code>modelo.addRow(...)</code>):</strong> El controlador envía nuevos datos al modelo; el modelo los guarda e informa a la vista, haciendo que la tabla visual se expanda de forma reactiva.</li>
+    <li><strong>2. Identificar (<code>tbl.getSelectedRow()</code>):</strong> Se consulta directamente a la vista visual para averiguar qué fila o registro concreto ha pulsado o seleccionado el usuario en pantalla.</li>
+    <li><strong>3. Eliminar (<code>modelo.removeRow(...)</code>):</strong> Se ordena al modelo destruir la fila identificada; el modelo actualiza su colección y la vista visual se contrae automáticamente.</li>
+  </ul>
+
+  <div class="diagram-box">
+    <div class="diagram-title">Regla Universal en Swing</div>
+    <p>Este flujo arquitectónico <code>Usuario &rarr; Controller &harr; Model / Controller &rarr; View &rarr; Usuario</code> es un estándar transversal que rige el funcionamiento de todos los componentes complejos de Java Swing: <code>JTable</code> (con <code>TableModel</code>), <code>JList</code> (con <code>ListModel</code>) y <code>JComboBox</code> (con <code>ComboBoxModel</code>).</p>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- SECCIÓN 8: PLANTEAMIENTO Y DISEÑO DE UNA INTERFAZ (FUNDAMENTOS) -->
+  <!-- ============================================================== -->
+
+  <div class="page-break"></div>
+  <div class="pdf-section">8. Planteamiento y Diseño de una Interfaz (Fundamentos de Desarrollo)</div>
+
+  <h2>8.1. Elementos Clave al Crear un Prototipo</h2>
+  <p>Al concebir y maquetar una nueva interfaz gráfica interactiva, existen cuatro aspectos primordiales que determinan su viabilidad y calidad:</p>
+  <ul>
+    <li><strong>Elementos que forman parte de la aplicación:</strong> Debe existir un número suficiente de componentes que cubran las funcionalidades requeridas, evitando siempre la sobrecarga o saturación visual.</li>
+    <li><strong>Extensión de la aplicación:</strong> Dimensiones, alcance y número de pantallas o vistas que compondrán el software.</li>
+    <li><strong>Patrones de diseño:</strong> Utilización de soluciones consolidadas para estandarizar la interacción y el diseño de las interfaces.</li>
+    <li><strong>Aspectos técnicos:</strong> Criterios obligatorios de usabilidad (facilidad de uso) y accesibilidad (inclusión y facilidad de navegación para todo tipo de usuarios).</li>
+  </ul>
+
+  <h2>8.2. Pasos Metodológicos para el Diseño de un Sitio Web o App</h2>
+  <p>El ciclo ordenado de conceptualización y construcción visual se estructura en cuatro etapas progresivas:</p>
+
+  <div class="diagram-box">
+    <div class="diagram-title">Secuencia de Diseño</div>
+    <ol>
+      <li><strong>Definición de propósitos y objetivo final:</strong> Fijar la meta estratégica y el problema real que resuelve la aplicación.</li>
+      <li><strong>Necesidades, requisitos y demandas funcionales:</strong> Analizar las características técnicas y operativas indispensables.</li>
+      <li><strong>Estructura visual base ("Wireframing"):</strong> Creación del plano estructural en blanco y negro o grises para ubicar y ordenar los contenidos.</li>
+      <li><strong>Desarrollo e implementación del prototipo:</strong> Elaboración interactiva de la maqueta funcional para su posterior prueba y validación.</li>
+    </ol>
+  </div>
+
+  <h2>8.3. Las 4 Áreas de Trabajo en el Desarrollo de Interfaces</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 22%;">Área de Trabajo</th>
+        <th style="width: 48%;">Funciones y Responsabilidades</th>
+        <th style="width: 30%;">Agentes / Entregables</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Área de Redacción</strong></td>
+        <td>Delimita los pilares fundamentales del proyecto y define el objetivo final de la aplicación. Considera que el planteamiento cambia drásticamente según la naturaleza del negocio (ej.: venta de comida a domicilio vs. venta de entradas a conciertos vs. domótica del hogar).</td>
+        <td>Definición estratégica de propósitos y funcionalidades primarias.</td>
+      </tr>
+      <tr>
+        <td><strong>Área de Producción</strong></td>
+        <td>Armoniza el propósito con el mercado actual, evalúa la viabilidad técnica y financiera, y establece el plan de desarrollo.</td>
+        <td>
+          <ul>
+            <li><strong>Cliente:</strong> Quien encarga el proyecto y aprueba entregas.</li>
+            <li><strong>Usuario:</strong> Público receptor final; se estudian sus necesidades.</li>
+            <li><strong>Presupuesto:</strong> Condiciona herramientas, CMS y alcance.</li>
+            <li><strong>Plan de trabajo:</strong> Calendarios, tareas e hitos.</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Área Técnica</strong></td>
+        <td>Constituida por los desarrolladores que estudian los requisitos de programación (HTML, CSS, bases de datos y lenguajes como Java). Trasladan los bocetos (sketching) y wireframes a prototipos y maquetas con interacción funcional.</td>
+        <td>Responsables técnicos, arquitectos de software y programadores.</td>
+      </tr>
+      <tr>
+        <td><strong>Área Artística</strong></td>
+        <td>Define la estética final combinando el objetivo del proyecto, las preferencias del cliente y la experiencia de usuario. Otorga personalidad propia y hace que la aplicación sea fácilmente reconocible, convirtiendo su estilo en su principal seña de identidad visual.</td>
+        <td>Diseñadores UI/UX, elección de tipografías, iconografía y colorimetría.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>8.4. Recursos para el Diseño del Color</h2>
+  <p>La selección coherente del color en el área artística se apoya en utilidades web para generar armonías, contrastes y códigos cromáticos estandarizados:</p>
+  <ul>
+    <li><strong>Selectores de Color (Color Pickers):</strong> Herramientas para extraer códigos HEX, RGB y HSL como <code>htmlcolorcodes.com/color-picker/</code> e <code>imagecolorpicker.com/</code>.</li>
+    <li><strong>Generadores de Paletas Cromáticas:</strong> Plataformas de combinaciones armónicas como <code>palettegenerator.com/</code> y el generador de paletas de Canva (<code>canva.com/colors/color-palette-generator/</code>).</li>
+  </ul>
+
+  <!-- ============================================================== -->
+  <!-- SECCIÓN 9: GENERACIÓN DE INTERFACES A PARTIR DE XML            -->
+  <!-- ============================================================== -->
+
+  <div class="page-break"></div>
+  <div class="pdf-section">9. Generación de Interfaces a partir de Documentos XML</div>
+
+  <h2>9.1. Paradigma Declarativo vs. Imperativo</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 50%;">Enfoque Imperativo (Java Swing)</th>
+        <th style="width: 50%;">Enfoque Declarativo (XML)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Instrucciones de construcción paso a paso.</td>
+        <td>Estructura jerárquica modelada mediante etiquetas de marcado.</td>
+      </tr>
+      <tr>
+        <td>Lógica de negocio y definición visual mezcladas en el mismo código.</td>
+        <td>Independencia absoluta de la lógica pragmática respecto a la vista.</td>
+      </tr>
+      <tr>
+        <td>Control manual de instanciación, asignación de layout y adición.</td>
+        <td>Delegación total del renderizado al motor gráfico subyacente.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>9.2. Definición y Usos Actuales de XML</h2>
+  <p><strong>XML (eXtensible Markup Language):</strong> Es un lenguaje de marcado extensible utilizado para estructurar, almacenar e intercambiar datos de manera fácil, segura y fiable entre distintas plataformas. Al ser un <em>metalenguaje</em>, sirve como base para definir otros lenguajes especializados:</p>
+  <ul>
+    <li><strong>Intercambio de información entre aplicaciones:</strong> Al basarse en documentos de texto plano, no requiere software propietario ni especializado para su procesamiento.</li>
+    <li><strong>Computación distribuida:</strong> Permite intercambiar información y comunicarse entre diferentes ordenadores heterogéneos conectados en red.</li>
+    <li><strong>Información empresarial:</strong> Relevancia creciente en la generación de interfaces corporativas gracias a la flexibilidad para estructurar los datos.</li>
+  </ul>
+
+  <h2>9.3. Anatomía Estructural de un Documento XML de Interfaz</h2>
+  <ul>
+    <li><strong>Etiquetas (Tags):</strong> Delimitan componentes visuales jerárquicos (nodos padre y nodos hijo).</li>
+    <li><strong>Atributos (Attributes):</strong> Pares clave-valor dentro de la etiqueta que actúan como modificadores estéticos (ancho, orientación) o de comportamiento (identificador).</li>
+    <li><strong>Valores (Values):</strong> Contenido textual interno asignado al componente visual (ej.: el texto visible de un botón).</li>
+  </ul>
+
+  <div class="diagram-box">
+    <div class="diagram-title">Ejemplo de Declaración Jerárquica en XML</div>
+    <pre><code>&lt;!-- Nodo Padre --&gt;
+&lt;Contenedor orientacion="vertical"&gt;
+    &lt;!-- Nodo Hijo con Atributos y Valor --&gt;
+    &lt;Boton ancho="100" id="btnAtaque"&gt;
+        Atacar Rival
+    &lt;/Boton&gt;
+&lt;/Contenedor&gt;</code></pre>
+  </div>
+
+  <h2>9.4. Lenguajes Derivados Basados en XML</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 20%;">Lenguaje</th>
+        <th style="width: 45%;">Descripción y Utilidad</th>
+        <th style="width: 35%;">Reglas y Características Clave</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>XHTML</strong></td>
+        <td><em>eXtensible HyperText Markup Language</em> - Lenguaje de marcado de hipertexto extensible derivado de XML. Más robusto y estricto que HTML para el modelado web.</td>
+        <td>
+          <ul>
+            <li><code>&lt;!DOCTYPE html&gt;</code> obligatorio.</li>
+            <li>Atributo <code>xmlns</code> obligatorio en <code>&lt;html&gt;</code>.</li>
+            <li>Nombres de elementos y atributos siempre en minúsculas.</li>
+            <li>Etiquetas correctamente anidadas y siempre cerradas.</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>GML</strong></td>
+        <td><em>Geography Markup Language</em> - Lenguaje para el modelado de información geográfica y espacial.</td>
+        <td>Compuesto por marcas precedidas de doble punto (ej.: <code>:h1.</code>, <code>:p.</code>, <code>:li.</code>) para parcelas, edificios y validación.</td>
+      </tr>
+      <tr>
+        <td><strong>MathML</strong></td>
+        <td><em>Mathematical Markup Language</em> - Diseñado para representar e intercambiar fórmulas matemáticas en aplicaciones y web.</td>
+        <td>Utiliza etiquetas semánticas como <code>&lt;math&gt;</code>, <code>&lt;mrow&gt;</code>, <code>&lt;mi&gt;</code> (identificadores), <code>&lt;mn&gt;</code> (números) y <code>&lt;mo&gt;</code> (operadores).</td>
+      </tr>
+      <tr>
+        <td><strong>RSS</strong></td>
+        <td><em>Really Simple Syndication</em> - Difusión automática de contenidos actualizados frecuentemente hacia usuarios suscritos.</td>
+        <td>Canal contenedor (<code>&lt;channel&gt;</code>) estructurado con nodos de título, enlace, descripción y marcas temporales (<code>&lt;pubDate&gt;</code>).</td>
+      </tr>
+      <tr>
+        <td><strong>XSLT</strong></td>
+        <td><em>eXtensible Stylesheet Language for Transformations</em> - Estándar de W3C para transformar documentos XML en otros formatos (HTML, texto plano).</td>
+        <td>Mucho más potente que CSS: permite agregar, eliminar, ordenar, filtrar y evaluar condiciones sobre los nodos de salida.</td>
+      </tr>
+    </tbody>
+  </table>
 
 </body>
 </html>
