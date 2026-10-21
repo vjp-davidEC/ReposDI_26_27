@@ -15,7 +15,7 @@ public class VentanaUsuario extends javax.swing.JFrame {
      */
     public VentanaUsuario() {
         initComponents();
-        
+
         this.setSize(500, 500);
         this.setLocationRelativeTo(null);
     }
@@ -45,6 +45,11 @@ public class VentanaUsuario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         botonRegistrar.setText("Registrar");
+        botonRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRegistrarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonRegistrar, java.awt.BorderLayout.SOUTH);
 
         jPanel1.setLayout(new java.awt.GridLayout(5, 2));
@@ -68,17 +73,45 @@ public class VentanaUsuario extends javax.swing.JFrame {
         curso.setText("Curso:");
         jPanel1.add(curso);
 
-        boxCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1º DAM", "2º DAM", "1º ASIR", "2º ASIR" }));
+        boxCurso.setToolTipText("");
         jPanel1.add(boxCurso);
         jPanel1.add(noTexto);
 
-        checkBox.setText("jCheckBox1");
+        checkBox.setText("Acepto las condiciones");
         jPanel1.add(checkBox);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarActionPerformed
+        String usuario = fieldUsuario.getText().trim();
+        String password1 = new String(fieldContrasenia.getPassword());
+        String password2 = new String(fieldRepetirContrasenia.getPassword());
+
+        // Validaciones encadenadas
+        if (usuario.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El usuario no puede estar vacío", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (password1.length() < 6) {
+            javax.swing.JOptionPane.showMessageDialog(this, "La contraseña debe tener al menos 6 caracteres", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!password1.equals(password2)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!checkBox.isSelected()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debes aceptar las condiciones", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String curso = (String) boxCurso.getSelectedItem();
+        javax.swing.JOptionPane.showMessageDialog(this, "Bienvenido, " + usuario + " (" + curso + ")", "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_botonRegistrarActionPerformed
 
     /**
      * @param args the command line arguments
