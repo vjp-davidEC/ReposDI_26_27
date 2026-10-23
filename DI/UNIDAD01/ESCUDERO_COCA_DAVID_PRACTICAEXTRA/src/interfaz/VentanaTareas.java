@@ -4,17 +4,28 @@
  */
 package interfaz;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author alumno
  */
 public class VentanaTareas extends javax.swing.JFrame {
+    
+    private DefaultListModel<String> modelo;
 
     /**
      * Creates new form VentanaTareas
      */
     public VentanaTareas() {
         initComponents();
+        
+        this.setSize(500, 500);
+        this.setLocationRelativeTo(null);
+        
+        modelo = new DefaultListModel<>();
+        jList1.setModel(modelo);
     }
 
     /**
@@ -31,6 +42,7 @@ public class VentanaTareas extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
         jPanel3 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -42,22 +54,45 @@ public class VentanaTareas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTextField1.setColumns(10);
+        jTextField1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(jTextField1);
 
+        jButton1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jButton1.setText("Añadir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.NORTH);
 
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
+
+        jList1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList1);
+
         jPanel2.add(jScrollPane1);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
+        jButton2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jButton2.setText("Completar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButton2);
 
-        jLabel1.setText("Pendientes:");
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel1.setText("Pendientes: 0");
         jPanel3.add(jLabel1);
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.SOUTH);
@@ -65,9 +100,19 @@ public class VentanaTareas extends javax.swing.JFrame {
         jMenu1.setText("Archivo");
 
         jMenuItem1.setText("Vaciar lista");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Salir");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
@@ -76,6 +121,44 @@ public class VentanaTareas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String tarea = jTextField1.getText().trim();
+        
+        if (tarea.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tarea vacía", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else if (modelo.contains(tarea)) {
+            JOptionPane.showMessageDialog(this, "Tarea ya existe", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else {
+            modelo.addElement(tarea);
+            jTextField1.setText("");
+            jLabel1.setText("Pendientes: " + modelo.size());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int index = jList1.getSelectedIndex();
+        
+        if (index == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona una tarea");
+        } else {
+            modelo.remove(index);
+            jLabel1.setText("Pendientes: " + modelo.size());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        int confirmar = JOptionPane.showConfirmDialog(this, "¿Vaciar lista?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        
+        if (confirmar == JOptionPane.YES_OPTION) {
+            modelo.clear();
+            jLabel1.setText("Pendientes: 0");
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -116,6 +199,7 @@ public class VentanaTareas extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
