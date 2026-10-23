@@ -185,7 +185,7 @@
 <body>
 
   <h1 class="doc-title">Diseño de Interfaces - Unidad de Trabajo 1</h1>
-  <p class="doc-subtitle">Planteamiento, Arquitectura, Prototipado, Layouts, Patrón MVC y Generación con XML</p>
+  <p class="doc-subtitle">Planteamiento, Arquitectura, Prototipado, Layouts, Patrón MVC, Generación con XML y Fundamentos de Usabilidad</p>
 
   <!-- ========================================== -->
   <!-- SECCIÓN 1: ARQUITECTURA DE LA INFORMACIÓN  -->
@@ -218,7 +218,7 @@
     <ul>
       <li><strong>1. Analizar:</strong> Revisar la lista desordenada de 30 productos de supermercado disponible en el campus virtual.</li>
       <li><strong>2. Agrupar:</strong> Realizar un "Card Sorting" abierto agrupando los productos de forma lógica (ej.: Lácteos, Limpieza).</li>
-      <li><strong>3. Etiquetar:</strong> Poner nombre a cada categoría evaluando si son claros y si un usuario entendería dónde buscar "Lejía" o "Galletas".</li>
+      <li><strong>3. Etiquetar:</strong> Poner nombre a cada categoría evaluando si son claros y si un usuario entendería dónde buscar "Lejja" o "Galletas".</li>
     </ul>
   </div>
 
@@ -618,6 +618,163 @@
       </tr>
     </tbody>
   </table>
+
+  <!-- ============================================================== -->
+  <!-- SECCIÓN 10: FUNDAMENTOS DE USABILIDAD Y EVALUACIÓN HEURÍSTICA  -->
+  <!-- ============================================================== -->
+
+  <div class="page-break"></div>
+  <div class="pdf-section">10. Fundamentos de Usabilidad y Evaluación Heurística</div>
+
+  <h2>10.1. ¿Qué es la Usabilidad y Distinciones Clave?</h2>
+  <p>La <strong>usabilidad</strong> mide la calidad de la experiencia de un usuario al interactuar con un producto o sistema. Sus tres pilares esenciales son:</p>
+  <ul>
+    <li><strong>Eficiencia:</strong> Lograr el objetivo de forma rápida.</li>
+    <li><strong>Facilidad:</strong> Que resulte intuitivo desde el primer uso.</li>
+    <li><strong>Satisfacción:</strong> Proporcionar una experiencia agradable y sin estrés.</li>
+  </ul>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Concepto</th>
+        <th style="width: 25%;">Pregunta Clave</th>
+        <th style="width: 50%;">Alcance y Foco</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Usabilidad</strong></td>
+        <td><em>¿Es fácil de usar?</em></td>
+        <td>Se centra en la interfaz gráfica y la interacción del usuario.</td>
+      </tr>
+      <tr>
+        <td><strong>Utilidad</strong></td>
+        <td><em>¿Hace lo que necesito?</em></td>
+        <td>Se centra en la funcionalidad real del producto y la resolución de tareas.</td>
+      </tr>
+      <tr>
+        <td><strong>Experiencia de Usuario (UX)</strong></td>
+        <td><em>¿Cómo me hace sentir?</em></td>
+        <td>Concepto global que engloba usabilidad, utilidad, accesibilidad, diseño visual y las emociones antes, durante y después del uso.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>10.2. Jakob Nielsen y los 5 Componentes de Usabilidad</h2>
+  <p>Jakob Nielsen, considerado el "Rey de la Usabilidad", transformó el diseño web priorizando la facilidad de uso sobre la estética pura y demostrando que la usabilidad debe ser rápida y barata para resultar efectiva. Define 5 componentes clave:</p>
+  <ul>
+    <li><strong>Aprendizaje (Learnability):</strong> Facilidad para realizar tareas básicas la primera vez que se interactúa con el sistema.</li>
+    <li><strong>Eficiencia (Efficiency):</strong> Rapidez con la que los usuarios pueden realizar las tareas una vez aprendido el funcionamiento.</li>
+    <li><strong>Memorización (Memorability):</strong> Facilidad para restablecer la competencia tras un período sin utilizar el sistema.</li>
+    <li><strong>Errores (Errors):</strong> Cantidad de fallos cometidos, su gravedad y la facilidad con la que el usuario puede recuperarse.</li>
+    <li><strong>Satisfacción (Satisfaction):</strong> Nivel de agrado y comodidad al utilizar el diseño interactivo.</li>
+  </ul>
+
+  <h2>10.3. Las 10 Heurísticas de Nielsen</h2>
+  <p>Reglas de oro universales para evaluar interfaces agrupadas por afinidad funcional:</p>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Heurística</th>
+        <th style="width: 25%;">Objetivo / Pregunta</th>
+        <th style="width: 25%;">Buenas Prácticas (BIEN)</th>
+        <th style="width: 25%;">Malas Prácticas (MAL)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Visibilidad del estado del sistema</strong></td>
+        <td>Mantener informado al usuario con feedback en tiempo razonable. <em>¿Sé qué está pasando?</em></td>
+        <td>Barras de progreso en subidas, confirmación de envío ("Pago realizado").</td>
+        <td>Pulsar un botón y que no haya cambios, induciendo a dobles pulsaciones por falta de respuesta.</td>
+      </tr>
+      <tr>
+        <td><strong>2. Concordancia entre el sistema y el mundo real</strong></td>
+        <td>Hablar el lenguaje del usuario sin jerga técnica interna. <em>¿Me habla en mi idioma?</em></td>
+        <td>Metáforas como carrito de compra, papelera o avisos legibles como "Contraseña demasiado corta".</td>
+        <td>Mensajes con códigos crípticos del tipo <code>Error 0x80070057: excepción en módulo</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>3. Control y libertad del usuario</strong></td>
+        <td>Disponer de una "salida de emergencia" clara para deshacer o cancelar. <em>¿Puedo salir y deshacer?</em></td>
+        <td>Botón "Deshacer" tras archivar correos, soporte para <code>Ctrl+Z</code> y botón "Cancelar" visible.</td>
+        <td>Modales sin botón de cierre o procesos que impiden rectificar una acción errónea.</td>
+      </tr>
+      <tr>
+        <td><strong>4. Consistencia y estándares</strong></td>
+        <td>Mismas palabras, colores y ubicaciones significan siempre lo mismo. <em>¿Todo funciona igual?</em></td>
+        <td>Logo que lleva al inicio y carrito arriba a la derecha siguiendo convenciones.</td>
+        <td>Cambiar el nombre del botón entre páginas ("Enviar" en una y "Aceptar" en otra) o variar su color.</td>
+      </tr>
+      <tr>
+        <td><strong>5. Prevención de errores</strong></td>
+        <td>Diseñar para evitar que el fallo ocurra antes que tener un buen mensaje. <em>¿Evita que me equivoque?</em></td>
+        <td>Selector de fecha en lugar de texto libre y confirmación antes de eliminar elementos.</td>
+        <td>Botón "Eliminar cuenta" pegado a "Guardar" sin diálogo de confirmación.</td>
+      </tr>
+      <tr>
+        <td><strong>6. Reconocimiento antes que recuerdo</strong></td>
+        <td>Hacer visibles opciones e información reduciendo carga cognitiva. <em>¿Lo veo sin memorizar?</em></td>
+        <td>Autocompletado, búsquedas recientes, menús con iconos y etiquetas.</td>
+        <td>Obligar a teclear de memoria un código mostrado tres pantallas atrás.</td>
+      </tr>
+      <tr>
+        <td><strong>7. Flexibilidad y eficiencia de uso</strong></td>
+        <td>Acelerar el uso a expertos sin confundir a novatos. <em>¿Sirve a novatos y expertos?</em></td>
+        <td>Atajos de teclado (<code>Ctrl+C</code>, <code>Ctrl+V</code>), filtros guardados y personalización.</td>
+        <td>Obligar a usuarios avanzados a recorrer siempre un asistente paso a paso de múltiples pantallas.</td>
+      </tr>
+      <tr>
+        <td><strong>8. Diseño estético y minimalista</strong></td>
+        <td>Eliminar información irrelevante que compita con lo importante. <em>¿Solo lo importante?</em></td>
+        <td>Buscador de Google: campo de búsqueda único y amplio espacio en blanco.</td>
+        <td>Pantallas saturadas de banners, pop-ups y carruseles que ocultan la acción principal.</td>
+      </tr>
+      <tr>
+        <td><strong>9. Ayudar a reconocer, diagnosticar y recuperarse de errores</strong></td>
+        <td>Mensajes en lenguaje claro que expliquen el problema y sugieran solución. <em>¿Me explica cómo arreglarlo?</em></td>
+        <td>"La contraseña necesita al menos 8 caracteres" resaltando el campo erróneo.</td>
+        <td>Avisos genéricos del tipo "Ha ocurrido un error" o formularios que se borran por completo.</td>
+      </tr>
+      <tr>
+        <td><strong>10. Ayuda y documentación</strong></td>
+        <td>Fácil de buscar, concisa y centrada en la tarea. <em>¿Encuentro ayuda cuando la necesito?</em></td>
+        <td>Buscadores integrados de soporte y tutoriales guiados para tareas concretas.</td>
+        <td>Manuales extensos en PDF de cientos de páginas sin índice ni relación con la pantalla actual.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>10.4. Evaluación Heurística: Escala de Severidad de Nielsen</h2>
+  <p>Al auditar interfaces se clasifican los fallos de 0 a 4 para priorizar las soluciones:</p>
+  <ul>
+    <li><strong>0 - Sin problema:</strong> No afecta a la usabilidad.</li>
+    <li><strong>1 - Cosmético:</strong> Solo se arregla si sobra tiempo.</li>
+    <li><strong>2 - Menor:</strong> Baja prioridad.</li>
+    <li><strong>3 - Mayor:</strong> Importante arreglarlo.</li>
+    <li><strong>4 - Catástrofe:</strong> Corrección obligatoria antes de lanzar el producto.</li>
+  </ul>
+
+  <h2>10.5. Herramientas de Medición e Impacto en la Economía Digital</h2>
+  <div class="diagram-box">
+    <div class="diagram-title">Herramientas de Medición de Usabilidad</div>
+    <ul>
+      <li><strong>Mapas de Calor (Heatmaps):</strong> Registran las zonas de la pantalla donde los usuarios hacen clic, desplazan el cursor o fijan la mirada.</li>
+      <li><strong>Testing A/B:</strong> Comparación de dos versiones de diseño con usuarios reales para determinar cuál obtiene mejor tasa de interacción o conversión.</li>
+      <li><strong>Encuestas SUS (System Usability Scale):</strong> Cuestionarios estandarizados para evaluar cuantitativamente la percepción de usabilidad.</li>
+    </ul>
+  </div>
+
+  <div class="diagram-box">
+    <div class="diagram-title">Impacto en el Retorno de Inversión (ROI)</div>
+    <ul>
+      <li><strong>Conversión:</strong> Flujos intuitivos sin fricción aumentan directamente ventas y registros.</li>
+      <li><strong>Fidelización:</strong> Experiencias agradables generan recurrencia y recomendación de usuarios.</li>
+      <li><strong>SEO:</strong> Una interfaz usable reduce la tasa de rebote, mejorando el posicionamiento orgánico en motores de búsqueda.</li>
+      <li><strong>Ahorro:</strong> Detectar y corregir fallos en fase de diseño es <strong>100 veces más barato</strong> que corregirlos durante el desarrollo en código.</li>
+    </ul>
+  </div>
 
 </body>
 </html>
