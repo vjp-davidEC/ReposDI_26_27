@@ -4,11 +4,16 @@
  */
 package interfaz_EJ04;
 
+import javax.swing.JOptionPane;
+import logica_EJ04.Astronauta;
+
 /**
  *
  * @author DAVID
  */
 public class DialogReclutamiento extends javax.swing.JDialog {
+    
+    private VentanaNave ventanaPadre;
 
     /**
      * Creates new form DialogReclutamiento
@@ -16,6 +21,11 @@ public class DialogReclutamiento extends javax.swing.JDialog {
     public DialogReclutamiento(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        this.setSize(414, 150);
+        this.setLocationRelativeTo(null);
+        
+        this.ventanaPadre = (VentanaNave) parent;
     }
 
     /**
@@ -27,21 +37,66 @@ public class DialogReclutamiento extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jSpinner1 = new javax.swing.JSpinner();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jButton1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton1, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.SOUTH);
+
+        jPanel4.setLayout(new java.awt.GridLayout(2, 2));
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel1.setText("Nombre:");
+        jPanel4.add(jLabel1);
+
+        jTextField1.setColumns(15);
+        jTextField1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jTextField1.setToolTipText("");
+        jPanel4.add(jTextField1);
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel2.setText("Misiones:");
+        jPanel4.add(jLabel2);
+
+        jSpinner1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jPanel4.add(jSpinner1);
+
+        getContentPane().add(jPanel4, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String nombre = jTextField1.getText().trim();
+        int misiones = (int) jSpinner1.getValue();
+        
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Rellena el nombre", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (misiones < 0) {
+            JOptionPane.showMessageDialog(this, "Las misiones deben ser positivos", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Astronauta a = new Astronauta(nombre, misiones);
+            ventanaPadre.recibirAstronauta(a);
+            this.dispose();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -86,5 +141,12 @@ public class DialogReclutamiento extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

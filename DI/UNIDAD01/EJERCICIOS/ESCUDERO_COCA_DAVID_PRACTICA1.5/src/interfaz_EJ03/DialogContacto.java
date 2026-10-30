@@ -4,18 +4,27 @@
  */
 package interfaz_EJ03;
 
+import javax.swing.JOptionPane;
+import logica_EJ03.Contacto;
+
 /**
  *
  * @author DAVID
  */
 public class DialogContacto extends javax.swing.JDialog {
 
+    private VentanaAgenda ventanaPadre;
+    
     /**
      * Creates new form DialogContacto
      */
     public DialogContacto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        this.setSize(414, 150);
+        this.setLocationRelativeTo(null);
+        this.ventanaPadre = (VentanaAgenda) parent;
     }
 
     /**
@@ -27,21 +36,67 @@ public class DialogContacto extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jButton1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton1, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.SOUTH);
+
+        jPanel1.setLayout(new java.awt.GridLayout(2, 2));
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel1.setText("Nombre:");
+        jPanel1.add(jLabel1);
+
+        jTextField1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jPanel1.add(jTextField1);
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel2.setText("Teléfono:");
+        jPanel1.add(jLabel2);
+
+        jTextField2.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jPanel1.add(jTextField2);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String nombre = jTextField1.getText().trim();
+        String telefono = jTextField2.getText().trim();
+        
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Rellena el nombre", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (telefono.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Rellena el telefono", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (telefono.length() != 9) {
+            JOptionPane.showMessageDialog(this, "Debe tener 9 números", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            Contacto c = new Contacto(nombre, telefono);
+            ventanaPadre.recibirContacto(c);
+            this.dispose();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -86,5 +141,12 @@ public class DialogContacto extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
