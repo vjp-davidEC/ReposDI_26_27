@@ -5,9 +5,8 @@
 package interfaz;
 
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -16,58 +15,22 @@ import javax.swing.JLabel;
 public class VentanaBuscaminas extends javax.swing.JFrame {
 
     private int minasDescubiertas = 0;
-    
+
     /**
      * Creates new form VentanaBuscaminas
      */
     public VentanaBuscaminas() {
         initComponents();
-        
+
         this.setSize(500, 500);
         this.setLocationRelativeTo(null);
-        
-        configurarEtiquetas();
-    }
-    
-        private void configurarEtiquetas() {
+
         JLabel[] etiquetas = {jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7, jLabel8, jLabel9, jLabel10};
-        
         for (JLabel lbl : etiquetas) {
             lbl.setOpaque(true);
             lbl.setBackground(Color.BLUE);
-            lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-            lbl.setName(lbl.getText()); 
-            
-            lbl.addMouseListener(new MouseAdapter() {
-                
-                @Override
-                public void mouseEntered(MouseEvent evt) {
-                    if (!lbl.getText().equals("¡BOOM!")) {
-                        lbl.setBackground(Color.YELLOW);
-                        lbl.setText("?");
-                    }
-                }
-                
-                @Override
-                public void mouseExited(MouseEvent evt) {
-                    if (!lbl.getText().equals("¡BOOM!")) {
-                        lbl.setBackground(Color.BLUE);
-                        lbl.setText(lbl.getName());
-                    }
-                }
-                
-                @Override
-                public void mouseClicked(MouseEvent evt) {
-                    if (!lbl.getText().equals("¡BOOM!")) {
-                        lbl.setBackground(Color.RED);
-                        lbl.setText("¡BOOM!");
-                        
-                        minasDescubiertas++;
-                        jLabel1.setText("Minas encontradas: " + minasDescubiertas);
-                    }
-                }
-            });
+            lbl.setHorizontalAlignment(SwingConstants.CENTER);
+            lbl.setName(lbl.getText());
         }
     }
 
@@ -102,44 +65,173 @@ public class VentanaBuscaminas extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel2.setText("1");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel2MouseExited(evt);
+            }
+        });
         jPanel1.add(jLabel2);
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setText("2");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel2MouseExited(evt);
+            }
+        });
         jPanel1.add(jLabel3);
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel4.setText("3");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel2MouseExited(evt);
+            }
+        });
         jPanel1.add(jLabel4);
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel5.setText("4");
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel2MouseExited(evt);
+            }
+        });
         jPanel1.add(jLabel5);
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel6.setText("5");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel2MouseExited(evt);
+            }
+        });
         jPanel1.add(jLabel6);
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel7.setText("6");
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel2MouseExited(evt);
+            }
+        });
         jPanel1.add(jLabel7);
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel8.setText("7");
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel2MouseExited(evt);
+            }
+        });
         jPanel1.add(jLabel8);
 
         jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel9.setText("8");
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel2MouseExited(evt);
+            }
+        });
         jPanel1.add(jLabel9);
 
         jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel10.setText("9");
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel2MouseExited(evt);
+            }
+        });
         jPanel1.add(jLabel10);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        JLabel label = (JLabel) evt.getSource();
+
+        if (!label.getText().equals("¡BOOM!")) {
+            label.setBackground(Color.RED);
+            label.setText("¡BOOM!");
+
+            minasDescubiertas++;
+            jLabel1.setText("Minas encontradas: " + minasDescubiertas);
+        }
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseEntered
+        JLabel label = (JLabel) evt.getSource();
+
+        if (!label.getText().equals("¡BOOM!")) {
+            label.setBackground(Color.YELLOW);
+            label.setText("?");
+        }
+    }//GEN-LAST:event_jLabel2MouseEntered
+
+    private void jLabel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseExited
+        JLabel label = (JLabel) evt.getSource();
+
+        if (!label.getText().equals("¡BOOM!")) {
+            label.setBackground(Color.BLUE);
+            label.setText(label.getName());
+        }
+    }//GEN-LAST:event_jLabel2MouseExited
 
     /**
      * @param args the command line arguments
