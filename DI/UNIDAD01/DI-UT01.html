@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UT1: Diseño y Desarrollo de Interfaces - DAM / DAW</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter & Fira Code -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 10pt;
+            line-height: 1.5;
+            color: #1e293b;
+            margin: 0;
+            padding: 0;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        pre code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            line-height: 1.45;
+        }
+        .tab-btn.active {
+            border-bottom-color: #19A349;
+            color: #ffff;
+            font-weight: 600;
+            background-color: #19A349;
+        }
+        .enlace-animado {
+            color: #0f172a;
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .enlace-animado::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #0f172a;
+            transform-origin: bottom left;
+            transition: transform 0.25s ease-out;
+        }
+        .enlace-animado:hover::after {
+            transform: scaleX(1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Component -->
+    <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-50 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-brand-600 p-2.5 rounded-xl shadow-md text-white">
+                    <i class="fa-solid fa-layer-group text-2xl"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="bg-brand-500/20 text-brand-300 text-xs px-2 py-0.5 rounded font-semibold border border-brand-500/30">DAM / DAW &bull; DI</span>
+                        <span class="text-xs text-slate-400">Desarrollo de Interfaces</span>
+                    </div>
+                    <h1 class="text-xl font-bold tracking-tight text-slate-100">UT1: Planteamiento, Usabilidad, XML y Prácticas Java Swing</h1>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3 text-xs">
+                <span class="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700">
+                    <i class="fa-solid fa-cubes text-brand-400 mr-1.5"></i> Unidad Temática 1
+                </span>
+                <span class="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 hidden sm:inline-block">
+                    <i class="fa-brands fa-java text-orange-400 mr-1.5"></i> Java Swing &amp; MVC
+                </span>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="bg-slate-800 border-t border-slate-700/60 px-4 overflow-x-auto custom-scrollbar">
+            <div class="max-w-7xl mx-auto flex space-x-1 min-w-max">
+                <button onclick="switchTab('teoria')" id="tab-teoria" class="tab-btn active px-4 py-3 text-sm font-medium text-slate-300 hover:text-white border-b-2 border-transparent transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-book text-brand-400"></i> 1. Teoría Completa
+                </button>
+                <button onclick="switchTab('layouts')" id="tab-layouts" class="tab-btn px-4 py-3 text-sm font-medium text-slate-300 hover:text-white border-b-2 border-transparent transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-border-all text-emerald-400"></i> 2. Layouts y MVC
+                </button>
+                <button onclick="switchTab('xml')" id="tab-xml" class="tab-btn px-4 py-3 text-sm font-medium text-slate-300 hover:text-white border-b-2 border-transparent transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-code text-sky-400"></i> 3. Generación XML y Usabilidad
+                </button>
+                <button onclick="switchTab('practicas')" id="tab-practicas" class="tab-btn px-4 py-3 text-sm font-medium text-slate-300 hover:text-white border-b-2 border-transparent transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-laptop-code text-amber-400"></i> 4. Prácticas UT1 (1.1 a 1.4)
+                </button>
+                <button onclick="switchTab('extra')" id="tab-extra" class="tab-btn px-4 py-3 text-sm font-medium text-slate-300 hover:text-white border-b-2 border-transparent transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-folder-tree text-purple-400"></i> 5. Modales, Tablas y Extras
+                </button>
+                <button onclick="switchTab('test')" id="tab-test" class="tab-btn px-4 py-3 text-sm font-medium text-slate-300 hover:text-white border-b-2 border-transparent transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-rose-400"></i> 6. Autoevaluación
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- ==================== TAB 1: TEORÍA COMPLETA ==================== -->
+        <section id="content-teoria" class="tab-content space-y-8">
+            <div class="bg-gradient-to-r from-slate-900 via-brand-900 to-slate-900 text-white p-6 rounded-2xl shadow-xl border border-slate-700">
+                <h2 class="text-2xl font-extrabold mb-2 flex items-center gap-3">
+                    <i class="fa-solid fa-compass-drafting text-brand-400"></i> Arquitectura de la Información, Prototipado y Jerarquía Visual
+                </h2>
+                <p class="text-slate-300 text-sm max-w-3xl leading-relaxed">
+                    Conceptos teóricos sobre la organización y estructuración de interfaces interactivas, técnicas participativas, feedback del sistema y el espectro de fidelidad en prototipos.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-3">
+                    <span class="bg-brand-100 text-brand-700 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold">1.1</span>
+                    Arquitectura de la Información (AI) y Herramientas
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-600 leading-relaxed">
+                    <div class="space-y-3">
+                        <p>
+                            <strong>Definición:</strong> Es el arte y la ciencia de estructurar, organizar y etiquetar sitios web, intranets, aplicaciones y software para apoyar activamente la usabilidad y la localizabilidad del contenido.
+                        </p>
+                        <p>
+                            <strong>Objetivo primordial:</strong> Ayudar a las personas a encontrar datos y completar tareas con facilidad. Si el usuario no logra ubicar un elemento, para él carece de existencia.
+                        </p>
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 text-xs space-y-2">
+                            <span class="font-bold text-slate-700 block">Técnicas esenciales:</span>
+                            <ul class="space-y-1.5 text-slate-600">
+                                <li>&bull; <strong>Card Sorting:</strong> Método participativo donde los usuarios ordenan tarjetas temáticas en grupos intuitivos, determinando estructuras mentales y rotulados (abierto o cerrado).</li>
+                                <li>&bull; <strong>Mapas de Sitio (Sitemaps):</strong> Planos arquitectónicos jerárquicos que previenen duplicidades y ordenan la navegación antes de codificar.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-slate-900 text-slate-200 p-4 rounded-xl font-mono text-xs space-y-2 border border-slate-800">
+                            <div class="text-emerald-400 font-bold border-b border-slate-700 pb-1">// Ley de Fitts &amp; Affordance</div>
+                            <p class="text-slate-300">
+                                <strong>Affordance:</strong> Cualidad visual sugerente de uso. Un botón debe insinuar su accionamiento mediante sombras, relieves o bordes.
+                            </p>
+                            <div class="p-2 bg-slate-800/80 rounded border border-slate-700 text-brand-300 text-[11px]">
+                                <strong>Ley de Fitts:</strong> El tiempo necesario para pulsar un objetivo depende de la distancia (D) y de su anchura (W).
+                                <br>&rarr; Los botones críticos deben ser <strong>grandes</strong> y estar <strong>próximos</strong> al puntero o pulgar.
+                            </div>
+                            <p class="text-slate-400 text-[11px] pt-1">Feedback del sistema: Notifica continuamente al usuario el estado operativo mediante estímulos visuales, auditivos o hápticos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-3">
+                    <span class="bg-brand-100 text-brand-700 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold">1.2</span>
+                    El Espectro de Fidelidad del Prototipado
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs">
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                        <span class="text-slate-500 font-bold uppercase text-[10px]">Fase 1 &bull; Baja Fidelidad</span>
+                        <h4 class="font-bold text-slate-900 text-sm">Boceto (Sketching)</h4>
+                        <p class="text-slate-600">Lápiz y papel. Rápido, barato y desechable para explorar esquemas visuales iniciales sin distracciones estéticas.</p>
+                    </div>
+                    <div class="p-4 bg-sky-50 rounded-xl border border-sky-200 space-y-2">
+                        <span class="text-sky-600 font-bold uppercase text-[10px]">Fase 2 &bull; Media Fidelidad</span>
+                        <h4 class="font-bold text-sky-900 text-sm">Wireframe</h4>
+                        <p class="text-sky-800">El plano estructural en escala de grises. Utiliza cajas, textos simulados y marcas (&quot;X&quot;) para reservar el espacio de contenidos.</p>
+                    </div>
+                    <div class="p-4 bg-purple-50 rounded-xl border border-purple-200 space-y-2">
+                        <span class="text-purple-600 font-bold uppercase text-[10px]">Fase 3 &bull; Alta Fidelidad</span>
+                        <h4 class="font-bold text-purple-900 text-sm">Mockup</h4>
+                        <p class="text-purple-800">Maqueta estática detallada con colores corporativos, tipografía real, iconografía definitiva y recursos visuales finales.</p>
+                    </div>
+                    <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-200 space-y-2">
+                        <span class="text-emerald-600 font-bold uppercase text-[10px]">Fase 4 &bull; Funcional</span>
+                        <h4 class="font-bold text-emerald-900 text-sm">Prototipo Interactivo</h4>
+                        <p class="text-emerald-800">Modelo digital interactivo con datos de ejemplo que simula clics, menús y transiciones antes de entrar en desarrollo software.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-3">
+                    <span class="bg-brand-100 text-brand-700 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold">1.3</span>
+                    Las 4 Áreas de Trabajo en el Desarrollo de Interfaces
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 border-b border-slate-200 text-slate-700">
+                                <th class="p-3 font-bold">Área de Trabajo</th>
+                                <th class="p-3 font-bold">Responsabilidades y Funciones</th>
+                                <th class="p-3 font-bold">Agentes y Entregables</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-slate-600">
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-900">Área de Redacción</td>
+                                <td class="p-3">Delimita los pilares funcionales y el objetivo del producto según el nicho de negocio.</td>
+                                <td class="p-3">Definición de propósitos, flujos y contenidos funcionales.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-900">Área de Producción</td>
+                                <td class="p-3">Evalúa la viabilidad técnica y financiera, armonizando necesidades con plazos de desarrollo.</td>
+                                <td class="p-3">Cliente, usuarios finales, estimación de presupuestos y calendarios.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-900">Área Técnica</td>
+                                <td class="p-3">Arquitectura e implementación técnica en lenguajes como Java, HTML, CSS o motores de base de datos.</td>
+                                <td class="p-3">Programadores, responsables de sistemas y arquitectos software.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-900">Área Artística</td>
+                                <td class="p-3">Diseña la identidad visual (UI/UX), asegurando coherencia cromática, tipografías y estética.</td>
+                                <td class="p-3">Diseñadores gráficos, paletas cromáticas, guías de estilo e iconos.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 2: LAYOUTS Y MVC ==================== -->
+        <section id="content-layouts" class="tab-content hidden space-y-8">
+            <div class="bg-emerald-900 text-white p-6 rounded-2xl shadow-xl border border-emerald-800">
+                <h2 class="text-2xl font-extrabold mb-2 flex items-center gap-3">
+                    <i class="fa-solid fa-border-all text-emerald-400"></i> Gestores de Diseño (Layouts) y Patrón MVC en Java Swing
+                </h2>
+                <p class="text-emerald-100 text-sm max-w-3xl leading-relaxed">
+                    Organización espacial de componentes, control de redimensionamiento automático y separación estricta entre modelo de datos y vista visual.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <h3 class="font-bold text-slate-900 text-base border-b border-slate-100 pb-3">Gestores de Diseño en Java Swing</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 border-b border-slate-200 text-slate-700">
+                                <th class="p-3 font-bold">Gestor de Diseño</th>
+                                <th class="p-3 font-bold">Estructura y Comportamiento</th>
+                                <th class="p-3 font-bold">Particularidad Técnica</th>
+                                <th class="p-3 font-bold">Caso de Uso Típico</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-slate-600">
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-900">BorderLayout</td>
+                                <td class="p-3">Divide el contenedor en 5 áreas: NORTH, SOUTH, EAST, WEST y CENTER. La zona central absorbe el espacio sobrante.</td>
+                                <td class="p-3">Layout predeterminado en contenedores de primer nivel (<code>JFrame</code>).</td>
+                                <td class="p-3">Ventanas con barra de menús/botones superior e inferior y área de trabajo.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-900">FlowLayout</td>
+                                <td class="p-3">Dispone componentes secuencialmente de izquierda a derecha con salto automático de línea.</td>
+                                <td class="p-3">Respeta el tamaño preferido (preferredSize) de cada componente.</td>
+                                <td class="p-3">Botoneras horizontales simples o barras de herramientas.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-900">GridLayout</td>
+                                <td class="p-3">Cuadrícula estricta y simétrica configurada por filas y columnas.</td>
+                                <td class="p-3">Todas las celdas comparten idénticas dimensiones forzando el redimensionamiento.</td>
+                                <td class="p-3">Teclados numéricos, botoneras de calculadora o tableros de juego.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-900">CardLayout</td>
+                                <td class="p-3">Superpone paneles como una baraja donde solo uno es visible simultáneamente.</td>
+                                <td class="p-3">Conmutación dinámica mediante identificadores de panel.</td>
+                                <td class="p-3">Asistentes paso a paso (wizards) o navegación por pestañas.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-900">Absolute (null)</td>
+                                <td class="p-3">Desactiva el layout obligando a indicar coordenadas fijas $(x, y)$ y tamaño.</td>
+                                <td class="p-3 font-semibold text-rose-600">Incompatible con diseño adaptable o redimensionado.</td>
+                                <td class="p-3">Desaconsejado en proyectos de producción profesional.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="p-3 bg-brand-50 rounded-lg border border-brand-200 text-brand-900 text-xs">
+                    <i class="fa-solid fa-lightbulb mr-1.5"></i> <strong>Regla de oro:</strong> Una interfaz robusta se diseña <strong>anidando paneles simples con layouts específicos</strong> (por ejemplo, un contenedor exterior con <code>BorderLayout</code> que aloja paneles internos con <code>GridLayout</code>).
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <h3 class="font-bold text-slate-900 text-base border-b border-slate-100 pb-3">Arquitectura Modelo-Vista-Controlador (MVC) en Swing</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                        <strong class="text-brand-700 text-sm block">1. Modelo (Model)</strong>
+                        <p class="text-slate-600">Almacén puro de datos (listas, colecciones, entidades). Notifica a las vistas cuando sufre alteraciones. <em>Ejemplo: <code>DefaultTableModel</code> o <code>DefaultListModel</code>.</em></p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                        <strong class="text-brand-700 text-sm block">2. Vista (View)</strong>
+                        <p class="text-slate-600">Representación visual inerte sin lógica de negocio. Solo pinta píxeles consultando el modelo. <em>Ejemplo: <code>JTable</code>, <code>JList</code> o <code>JComboBox</code>.</em></p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                        <strong class="text-brand-700 text-sm block">3. Controlador (Controller)</strong>
+                        <p class="text-slate-600">Gestores de eventos (<code>ActionListener</code>) que capturan la acción del usuario, operan sobre el modelo y refrescan la vista.</p>
+                    </div>
+                </div>
+                <div class="p-3 bg-amber-50 rounded-lg border border-amber-200 text-amber-900 text-xs">
+                    <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> <strong>Principio de separación de Swing:</strong> Nunca se insertan o borran filas manipulando directamente el <code>JTable</code>; se opera sobre el <strong>Modelo</strong> y este propaga la actualización visual.
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 3: XML Y USABILIDAD ==================== -->
+        <section id="content-xml" class="tab-content hidden space-y-8">
+            <div class="bg-sky-900 text-white p-6 rounded-2xl shadow-xl border border-sky-800">
+                <h2 class="text-2xl font-extrabold mb-2 flex items-center gap-3">
+                    <i class="fa-solid fa-code text-sky-400"></i> Lenguajes de Marcado XML y Heurísticas de Usabilidad
+                </h2>
+                <p class="text-sky-100 text-sm max-w-3xl leading-relaxed">
+                    Comparativa entre diseño imperativo y declarativo, lenguajes derivados de XML y los 10 principios heurísticos de Jakob Nielsen.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <h3 class="font-bold text-slate-900 text-base border-b border-slate-100 pb-3">Imperativo (Java) vs. Declarativo (XML)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                        <strong class="text-slate-900 block text-sm">Paradigma Imperativo (Java Swing)</strong>
+                        <ul class="space-y-1.5 text-slate-600">
+                            <li>&bull; Instrucciones paso a paso escritas en código compilado.</li>
+                            <li>&bull; La lógica funcional y la definición visual se mezclan con frecuencia.</li>
+                            <li>&bull; Control exhaustivo de instanciación manual de componentes y layouts.</li>
+                        </ul>
+                    </div>
+                    <div class="p-4 bg-sky-50 rounded-xl border border-sky-200 space-y-2">
+                        <strong class="text-sky-900 block text-sm">Paradigma Declarativo (XML / FXML / Android XML)</strong>
+                        <ul class="space-y-1.5 text-sky-800">
+                            <li>&bull; Estructura visual jerárquica modelada mediante etiquetas de marcado legibles.</li>
+                            <li>&bull; Desacopla por completo la vista de la lógica de programación.</li>
+                            <li>&bull; El renderizado se delega al motor gráfico del entorno.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <h3 class="font-bold text-slate-900 text-base border-b border-slate-100 pb-3">Las 10 Heurísticas de Usabilidad de Jakob Nielsen</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-slate-900">1. Visibilidad del estado:</strong> Feedback continuo al usuario sobre lo que ocurre en tiempo razonable.
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-slate-900">2. Relación con el mundo real:</strong> Utilizar el vocabulario y conceptos del usuario evitando códigos técnicos crípticos.
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-slate-900">3. Control y libertad:</strong> Salidas de emergencia visibles (deshacer, cancelar, cerrar modal).
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-slate-900">4. Consistencia y estándares:</strong> Mismos términos y acciones deben significar idéntica función en toda la app.
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-slate-900">5. Prevención de errores:</strong> Diseñar interfaces que impidan cometer fallos antes de necesitar avisos.
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-slate-900">6. Reconocimiento antes que recuerdo:</strong> Mantener visibles opciones y datos para reducir la carga cognitiva.
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-slate-900">7. Flexibilidad y eficiencia:</strong> Aceleradores y atajos para usuarios expertos sin entorpecer a novatos.
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-slate-900">8. Diseño minimalista:</strong> Evitar elementos irrelevantes que compitan con la información esencial.
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-slate-900">9. Recuperación de errores:</strong> Mensajes claros que diagnostiquen el problema y propongan una solución constructiva.
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <strong class="text-slate-900">10. Ayuda y documentación:</strong> Sección de asistencia concisa, estructurada y contextual a la tarea en curso.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 4: PRÁCTICAS 1.1 A 1.4 ==================== -->
+        <section id="content-practicas" class="tab-content hidden space-y-8">
+            <div class="bg-amber-900 text-white p-6 rounded-2xl shadow-xl border border-amber-800 flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-extrabold mb-1 flex items-center gap-3">
+                        <i class="fa-solid fa-laptop-code text-amber-400"></i> Prácticas Oficiales UT1 (Java Swing)
+                    </h2>
+                    <p class="text-amber-100 text-xs">
+                        Código fuente completo y estructurado correspondiente a las Prácticas 1.1, 1.2, 1.3 y 1.4.
+                    </p>
+                </div>
+            </div>
+
+            <!-- PRÁCTICA 1.1 -->
+            <div class="space-y-6">
+                <div class="border-l-4 border-amber-500 pl-3">
+                    <h3 class="text-lg font-bold text-slate-900">Práctica 1.1 (Paquete: interfaz)</h3>
+                    <p class="text-xs text-slate-500">Formularios básicos, validaciones sencillas, controles de contraseña y captura de excepciones aritméticas.</p>
+                </div>
+
+                <!-- VentanaSaludo -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">VentanaSaludo.java</h4>
+                            <span class="text-xs text-slate-500">Captura de texto, validación de contenido y saludo personalizado.</span>
+                        </div>
+                        <button onclick="copyCode('code-saludo', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-saludo">package interfaz;
+
+public class VentanaSaludo extends javax.swing.JFrame {
+
+    public VentanaSaludo() {
+        initComponents();
+    }
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        String nombre = jTextField1.getText().trim();
+        
+        if (nombre.isEmpty() || nombre.equals("Nombre")) {
+            jLabel1.setText("Por favor, escribe tu nombre");
+        } else {
+            jLabel1.setText("Hola de nuevo, " + nombre);
+        }
+    }
+
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(() -> new VentanaSaludo().setVisible(true));
+    }
+}</code></pre>
+<a href="Diseño/VentanaSaludo.pdf" class="enlace-animado">VentanaSaludo</a>
+                </div>
+
+                <!-- VentanaLogin -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">VentanaLogin.java</h4>
+                            <span class="text-xs text-slate-500">Autenticación con JTextField y JPasswordField.</span>
+                        </div>
+                        <button onclick="copyCode('code-login', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-login">package interfaz;
+
+public class VentanaLogin extends javax.swing.JFrame {
+
+    public VentanaLogin() {
+        initComponents();
+    }
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        String usuario = jTextField1.getText().trim();
+        String clave = new String(jPasswordField1.getPassword());
+        
+        if (usuario.equals("admin") && clave.equals("1234")) {
+            jLabel3.setText("Credenciales correctas");
+        } else {
+            jLabel3.setText("Error. Credenciales no válidas");
+        }
+    }
+
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(() -> new VentanaLogin().setVisible(true));
+    }
+}</code></pre>
+<a href="Diseño/VentanaLogin.pdf" class="enlace-animado">VentanaLogin</a>
+                </div>
+
+                <!-- VentanaCalculadora -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">VentanaCalculadora.java</h4>
+                            <span class="text-xs text-slate-500">Operaciones aritméticas y control con try-catch (NumberFormatException).</span>
+                        </div>
+                        <button onclick="copyCode('code-calc', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-calc">package interfaz;
+
+public class VentanaCalculadora extends javax.swing.JFrame {
+
+    public VentanaCalculadora() {
+        initComponents();
+    }
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            int num1 = Integer.parseInt(jTextField1.getText().trim());
+            int num2 = Integer.parseInt(jTextField2.getText().trim());
+            
+            int suma = num1 + num2;
+            jLabel3.setText(String.valueOf(suma));
+        } catch (NumberFormatException e) {
+            jLabel3.setText("Solo numeros");
+        }
+    }
+
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(() -> new VentanaCalculadora().setVisible(true));
+    }
+}</code></pre>
+<a href="Diseño/VentanaCalculadora.pdf" class="enlace-animado">VentanaCalculadora</a>
+                </div>
+            </div>
+
+            <!-- PRÁCTICA 1.2 -->
+            <div class="space-y-6 pt-4 border-t border-slate-200">
+                <div class="border-l-4 border-emerald-500 pl-3">
+                    <h3 class="text-lg font-bold text-slate-900">Práctica 1.2 (Paquetes: interfaz, interfaz2, interfaz3)</h3>
+                    <p class="text-xs text-slate-500">Clases de datos, encapsulación, SumadorPares y simulación de combate por turnos.</p>
+                </div>
+
+                <!-- Libro + VentanaLibro -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">Libro.java &amp; VentanaLibro.java (interfaz)</h4>
+                            <span class="text-xs text-slate-500">Modelado de entidad Libro y formulario con JCheckBox.</span>
+                        </div>
+                        <button onclick="copyCode('code-libro', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-libro">// Libro.java
+package interfaz;
+
+public class Libro {
+    private int numPaginas;
+    private String titulo;
+    private boolean almacenado;
+
+    public Libro(int numPaginas, String titulo, boolean almacenado) {
+        this.numPaginas = numPaginas;
+        this.titulo = titulo;
+        this.almacenado = almacenado;
+    }
+    
+    public int getNumPaginas() { return numPaginas; }
+    public String getTitulo() { return titulo; }
+    public boolean isAlmacenado() { return almacenado; }
+
+    @Override
+    public String toString() {
+        return titulo + " de " + numPaginas + " paginas, " + (almacenado ? "esta" : "no esta") + " en la biblioteca";
+    }
+}
+
+// Evento en VentanaLibro.java
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    try {
+        String titulo = jTextField2.getText().trim();
+        int numPag = Integer.parseInt(jTextField1.getText().trim());
+        boolean encontrado = jCheckBox1.isSelected();
+        
+        if (titulo.isEmpty()) {
+            Result.setText("Por favor, escribe un titulo");
+        } else if (numPag <= 0) {
+            Result.setText("Debe de ser un numero positivo");
+        } else {
+            Libro libro = new Libro(numPag, titulo, encontrado);
+            Result.setText(libro.toString());
+        }
+    } catch (NumberFormatException e) {
+        Result.setText("El numero de paginas debe ser un numero entero");
+    }
+}</code></pre>
+<a href="Diseño/VentanaLibro.pdf" class="enlace-animado">VentanaLibro</a>
+                </div>
+
+                <!-- SumadorPares + VentanaSumador -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">SumadorPares.java &amp; VentanaSumador.java (interfaz2)</h4>
+                            <span class="text-xs text-slate-500">Clase lógica para sumas numéricas y validación en interfaz.</span>
+                        </div>
+                        <button onclick="copyCode('code-sumador', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-sumador">// SumadorPares.java
+package interfaz2;
+
+public class SumadorPares {
+    private int num1;
+    private int num2;
+
+    public SumadorPares(int num1, int num2) {
+        this.num1 = num1;
+        this.num2 = num2;
+    }
+    public int sumar() { return num1 + num2; }
+}
+
+// Evento en VentanaSumador.java
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    try {
+        int num1 = Integer.parseInt(jTextField1.getText().trim());
+        int num2 = Integer.parseInt(jTextField2.getText().trim());
+    
+        if (num1 < 0 || num2 < 0) {
+            Resultado.setText("Error: Introduce un numero positivo");
+        } else {
+            SumadorPares sumarPares = new SumadorPares(num1, num2);
+            Resultado.setText("Resultado: " + sumarPares.sumar());
+        }
+    } catch (NumberFormatException e) {
+        Resultado.setText("Error: Debe de ser un numero entero");
+    }
+}</code></pre>
+<a href="Diseño/VentanaSumador.pdf" class="enlace-animado">VentanaSumador</a>
+                </div>
+
+                <!-- Personaje + VentanaWarcraft -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">Personaje.java &amp; VentanaWarcraft.java (interfaz3)</h4>
+                            <span class="text-xs text-slate-500">Combate por turnos con Random y actualización dinámica de estadísticas.</span>
+                        </div>
+                        <button onclick="copyCode('code-warcraft', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-warcraft">// Personaje.java (interfaz3)
+package interfaz3;
+import java.util.Random;
+
+public class Personaje {
+    private String nombre;
+    private int fuerza, defensa, vida;
+
+    public Personaje(String nombre) {
+        this.nombre = nombre;
+        Random rand = new Random();
+        fuerza = rand.nextInt(8) + 3;
+        defensa = rand.nextInt(6);
+        vida = 10;
+    }
+
+    public boolean vivo() { return vida > 0; }
+    
+    public String ataca(Personaje defensor) {
+        Random rand = new Random();
+        if (rand.nextInt(100) < 70) {
+            int danio = fuerza - defensor.defensa;
+            if (danio < 1) danio = 1;
+            defensor.vida -= danio;
+            return nombre + " ataca a " + defensor.nombre + " y le quita " + danio + " de vida";
+        }
+        return nombre + " ataca pero falla el golpe";
+    }
+}
+
+// Botones de ataque en VentanaWarcraft.java
+private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+    if (p1 != null && p2 != null) {
+        jTextArea1.append(p1.ataca(p2) + "\n");
+        actualizarStats();
+        if (!p2.vivo()) {
+            jTextArea1.append("\n --" + p1.getNombre() + " GANA EL COMBATE--");
+            jButton2.setVisible(false);
+            jButton3.setVisible(false);
+        }
+    }
+}</code></pre>
+<a href="Diseño/VentanaWarcraft.pdf" class="enlace-animado">VentanaWarcraft</a>
+                </div>
+            </div>
+
+            <!-- PRÁCTICA 1.3 -->
+            <div class="space-y-6 pt-4 border-t border-slate-200">
+                <div class="border-l-4 border-sky-500 pl-3">
+                    <h3 class="text-lg font-bold text-slate-900">Práctica 1.3 (Paquetes: interfaz_E1, logica, interfaz_E3)</h3>
+                    <p class="text-xs text-slate-500">Catálogos dinámicos con ArrayList y combate RPG polimórfico.</p>
+                </div>
+
+                <!-- VentanaCatálogo con ArrayList -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">VentanaCatálogo.java (interfaz_E1)</h4>
+                            <span class="text-xs text-slate-500">Gestión de colección dinámica en memoria con ArrayList&lt;Libro&gt;.</span>
+                        </div>
+                        <button onclick="copyCode('code-catalogo-e1', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-catalogo-e1">ArrayList&lt;Libro&gt; catalogo = new ArrayList&lt;&gt;();
+
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    try {
+        String titulo = jTextField2.getText().trim();
+        int paginas = Integer.parseInt(jTextField1.getText().trim());
+        boolean estaAlmacenado = jCheckBox1.isSelected();
+        
+        if (titulo.isEmpty() || paginas <= 0) {
+            jTextArea1.setText("Introduce valores válidos");
+        } else {
+            catalogo.add(new Libro(paginas, titulo, estaAlmacenado));
+            jTextArea1.setText("--CATÁLOGO ACTUAL--\n");
+            for (Libro li : catalogo) {
+                jTextArea1.append(" - " + li.toString() + "\n");
+            }
+            jTextArea1.append("\nTotal de libros: " + catalogo.size());
+        }
+    } catch (NumberFormatException e) {
+        jTextArea1.setText("Páginas debe ser un número entero");
+    }
+}</code></pre>
+<a href="Diseño/VentanaCatálogo.pdf" class="enlace-animado">VentanaCatálogo</a>
+                </div>
+
+                <!-- Polimorfismo: Personaje, Guerrero, Mago, Arquero, Jefe -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">Jerarquía Polimórfica (logica) &amp; VentanaSeleccion (interfaz_E3)</h4>
+                            <span class="text-xs text-slate-500">Clase abstracta Personaje, subclases especializadas y selección con JComboBox.</span>
+                        </div>
+                        <button onclick="copyCode('code-rpg', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-rpg">// Personaje abstracto
+package logica;
+public abstract class Personaje {
+    protected String nombre;
+    protected int fuerza, defensa, vida, vidaMax;
+    public abstract String ataca(Personaje defensor);
+    public boolean vivo() { return vida > 0; }
+    public int calcularDanio(Personaje defensor) {
+        return Math.max(fuerza - defensor.defensa, 1);
+    }
+}
+
+// Subclase Guerrero (ejemplo con bono espada)
+public class Guerrero extends Personaje {
+    public Guerrero(String nombre) {
+        super(nombre);
+        setVida(15); setVidaMax(15);
+    }
+    @Override
+    public String ataca(Personaje defensor) {
+        int danio = calcularDanio(defensor) + 1;
+        defensor.setVida(defensor.getVida() - danio);
+        return getNombre() + " (Guerrero) golpea con su espada y quita " + danio;
+    }
+}
+
+// Selección en VentanaSeleccion.java (interfaz_E3)
+Personaje miPersonaje;
+if (clase.equals("Guerrero")) miPersonaje = new Guerrero(nombre);
+else if (clase.equals("Mago")) miPersonaje = new Mago(nombre);
+else miPersonaje = new Arquero(nombre);
+
+new VentanaCombate(miPersonaje).setVisible(true);
+this.dispose();</code></pre>
+<a href="Diseño/VentanaSeleccion-VentanaCombate.pdf" class="enlace-animado">VentanaSeleccion-VentanaCombate</a>
+                </div>
+            </div>
+
+            <!-- PRÁCTICA 1.4 -->
+            <div class="space-y-6 pt-4 border-t border-slate-200">
+                <div class="border-l-4 border-purple-500 pl-3">
+                    <h3 class="text-lg font-bold text-slate-900">Práctica 1.4 (Paquetes: logica, interfaz)</h3>
+                    <p class="text-xs text-slate-500">Sesión de usuario con Jugador, menú de juegos, Cazatesoros con IA y Buscaminas con MouseAdapter.</p>
+                </div>
+
+                <!-- Jugador + VentanaPrincipal -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">Jugador.java &amp; VentanaPrincipal.java (interfaz)</h4>
+                            <span class="text-xs text-slate-500">Entidad de jugador y menú con JOptionPane.showInputDialog para desbloqueo de acceso.</span>
+                        </div>
+                        <button onclick="copyCode('code-p14-principal', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-p14-principal">// Jugador.java (logica)
+package logica;
+public class Jugador {
+    private String nombre;
+    private int puntuacion = 0;
+    public Jugador(String nombre) { this.nombre = nombre; }
+    public String getNombre() { return nombre; }
+    public int getPuntuacion() { return puntuacion; }
+}
+
+// Menú en VentanaPrincipal.java (interfaz)
+private void jMenuItemRegisActionPerformed(java.awt.event.ActionEvent evt) {
+    String nombre = JOptionPane.showInputDialog(this, "Introduce tu nombre: ");
+    if (nombre != null && !nombre.trim().isEmpty()) {
+        Jugador miJugador = new Jugador(nombre.trim());
+        jLabel1.setText("Vamos a jugar, " + miJugador.getNombre());
+        jMenuItemJugar.setEnabled(true);
+    }
+}
+
+private void jMenuItemJugarActionPerformed(java.awt.event.ActionEvent evt) {
+    new VentanaCazatesoros().setVisible(true);
+    this.setVisible(false);
+}</code></pre>
+                </div>
+
+                <!-- Cazatesoros -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">VentanaCazatesoros.java (interfaz)</h4>
+                            <span class="text-xs text-slate-500">Matriz de 16 botones GridLayout(4,4) con tesoros ocultos y turno de la CPU.</span>
+                        </div>
+                        <button onclick="copyCode('code-cazatesoros', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-cazatesoros">private void botonPulsado(java.awt.event.ActionEvent evt) {
+    JButton btn = (JButton) evt.getSource();
+    if (turnoUsuario && btn.isEnabled()) {
+        if ("tesoro".equals(btn.getName())) {
+            btn.setBackground(Color.ORANGE);
+            puntosUsuario++;
+            tesorosRestantes--;
+        } else {
+            btn.setBackground(Color.DARK_GRAY);
+        }
+        btn.setEnabled(false);
+        actualizarMarcador();
+        
+        if (tesorosRestantes == 0) terminarJuego();
+        else {
+            turnoUsuario = false;
+            jugarCPU();
+        }
+    }
+}
+
+private void jugarCPU() {
+    Random rand = new Random();
+    int pos = rand.nextInt(16);
+    while (!botones[pos].isEnabled()) pos = rand.nextInt(16);
+    
+    JButton btnCPU = botones[pos];
+    if ("tesoro".equals(btnCPU.getName())) {
+        btnCPU.setBackground(Color.YELLOW);
+        puntosCPU++;
+        tesorosRestantes--;
+    } else {
+        btnCPU.setBackground(Color.DARK_GRAY);
+    }
+    btnCPU.setEnabled(false);
+    actualizarMarcador();
+    turnoUsuario = true;
+    if (tesorosRestantes == 0) terminarJuego();
+}</code></pre>
+                </div>
+
+                <!-- Buscaminas -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">VentanaBuscaminas.java (interfaz)</h4>
+                            <span class="text-xs text-slate-500">Matriz de 9 etiquetas JLabel con oyentes MouseAdapter (entered, exited, clicked).</span>
+                        </div>
+                        <button onclick="copyCode('code-buscaminas', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-buscaminas">private void configurarEtiquetas() {
+    JLabel[] etiquetas = {jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7, jLabel8, jLabel9, jLabel10};
+    for (JLabel lbl : etiquetas) {
+        lbl.setOpaque(true);
+        lbl.setBackground(Color.BLUE);
+        lbl.setName(lbl.getText());
+        
+        lbl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent evt) {
+                if (!lbl.getText().equals("¡BOOM!")) {
+                    lbl.setBackground(Color.YELLOW);
+                    lbl.setText("?");
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent evt) {
+                if (!lbl.getText().equals("¡BOOM!")) {
+                    lbl.setBackground(Color.BLUE);
+                    lbl.setText(lbl.getName());
+                }
+            }
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                if (!lbl.getText().equals("¡BOOM!")) {
+                    lbl.setBackground(Color.RED);
+                    lbl.setText("¡BOOM!");
+                    minasDescubiertas++;
+                    jLabel1.setText("Minas encontradas: " + minasDescubiertas);
+                }
+            }
+        });
+    }
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 5: MODALES, TABLAS Y EXTRAS ==================== -->
+        <section id="content-extra" class="tab-content hidden space-y-8">
+            <div class="bg-purple-900 text-white p-6 rounded-2xl shadow-xl border border-purple-800 flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-extrabold mb-1 flex items-center gap-3">
+                        <i class="fa-solid fa-folder-tree text-purple-400"></i> Diálogos Modales, AbstractTableModel y Formularios Extra
+                    </h2>
+                    <p class="text-purple-100 text-xs">
+                        Ejercicios avanzados con JDialog modal, modelos personalizados de JTable y formularios reactivos.
+                    </p>
+                </div>
+            </div>
+
+            <!-- EJ01: VentanaPrincipal + DialogPerfil -->
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-sm">1. Comunicación Modal: VentanaPrincipal &amp; DialogPerfil (interfaz_EJ01)</h4>
+                        <span class="text-xs text-slate-500">Apertura modal con JDialog, validación de nombre/nivel y refresco en ventana padre.</span>
+                    </div>
+                    <button onclick="copyCode('code-ej01', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                        <i class="fa-regular fa-copy"></i> Copiar Código
+                    </button>
+                </div>
+                <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-ej01">// VentanaPrincipal.java (interfaz_EJ01)
+public void actualizarPerfil(String nombre, int nivel) {
+    jLabel1.setText("Usuario: " + nombre);
+    jLabel2.setText("Nivel: " + nivel);
+}
+
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    new DialogPerfil(this, true).setVisible(true);
+}
+
+// DialogPerfil.java (interfaz_EJ01)
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    String nombre = jTextField1.getText().trim();
+    int nivel = (int) jSpinner1.getValue();
+    
+    if (nombre.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Pon tu nombre", "ERROR", JOptionPane.ERROR_MESSAGE);
+    } else if (nivel < 0) {
+        JOptionPane.showMessageDialog(this, "Tiene que ser un número positivo", "ERROR", JOptionPane.ERROR_MESSAGE);
+    } else {
+        ventanaPadre.actualizarPerfil(nombre, nivel);
+        this.dispose();
+    }
+}</code></pre>
+            </div>
+
+            <!-- EJ02: Coche + Modelo + VentanaCatalogo -->
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-sm">2. Catálogo de Coches: Modelo AbstractTableModel (interfaz_EJ02 &amp; logica_EJ02)</h4>
+                        <span class="text-xs text-slate-500">Modelo tabular personalizado para objetos Coche sin modelo por defecto.</span>
+                    </div>
+                    <button onclick="copyCode('code-ej02', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                        <i class="fa-regular fa-copy"></i> Copiar Código
+                    </button>
+                </div>
+                <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-ej02">// Modelo.java (logica_EJ02)
+public class Modelo extends AbstractTableModel {
+    private List&lt;Coche&gt; listaCoches = new ArrayList&lt;&gt;();
+    private String[] columnas = {"Marca", "Modelo", "Caballos"};
+
+    public Modelo() {
+        listaCoches.add(new Coche("Ford", "Focus", 120));
+        listaCoches.add(new Coche("Seat", "Ibiza", 110));
+        listaCoches.add(new Coche("Ferrari", "F40", 500));
+        listaCoches.add(new Coche("BYD", "SEAL U DM-i", 218));
+    }
+
+    @Override public int getRowCount() { return listaCoches.size(); }
+    @Override public int getColumnCount() { return columnas.length; }
+    @Override public String getColumnName(int column) { return columnas[column]; }
+    
+    @Override
+    public Object getValueAt(int rowIndex, int columIndex) {
+        Coche c = listaCoches.get(rowIndex);
+        switch (columIndex) {
+            case 0: return c.getMarca();
+            case 1: return c.getModelo();
+            case 2: return c.getCaballos();
+            default: return null;
+        }
+    }
+}
+
+// Vinculación en VentanaCatalogo.java:
+Modelo modelo = new Modelo();
+jTable1.setModel(modelo);</code></pre>
+            </div>
+
+            <!-- EJ03: Contacto + Modelo + DialogContacto + VentanaAgenda -->
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-sm">3. Agenda de Contactos con Diálogo Modal (interfaz_EJ03 &amp; logica_EJ03)</h4>
+                        <span class="text-xs text-slate-500">Adición dinámica a AbstractTableModel mediante formulario emergente.</span>
+                    </div>
+                    <button onclick="copyCode('code-ej03', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                        <i class="fa-regular fa-copy"></i> Copiar Código
+                    </button>
+                </div>
+                <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-ej03">// Modelo.java (logica_EJ03)
+public void addModelo(Contacto c) {
+    listaContactos.add(c);
+    this.fireTableDataChanged();
+}
+
+// DialogContacto.java (interfaz_EJ03)
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    String nombre = jTextField1.getText().trim();
+    String telefono = jTextField2.getText().trim();
+    
+    if (nombre.isEmpty() || telefono.length() != 9) {
+        JOptionPane.showMessageDialog(this, "Datos no válidos (teléfono de 9 dígitos)", "Error", JOptionPane.ERROR_MESSAGE);
+    } else {
+        ventanaPadre.recibirContacto(new Contacto(nombre, telefono));
+        this.dispose();
+    }
+}</code></pre>
+            </div>
+
+            <!-- EJ04: Astronauta + Modelo + DialogReclutamiento + VentanaNave -->
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-sm">4. Reclutamiento de Astronautas (interfaz_EJ04 &amp; logica_EJ04)</h4>
+                        <span class="text-xs text-slate-500">Cálculo dinámico en columna calculada (Veterano si misiones &gt;= 3).</span>
+                    </div>
+                    <button onclick="copyCode('code-ej04', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                        <i class="fa-regular fa-copy"></i> Copiar Código
+                    </button>
+                </div>
+                <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-ej04">// Modelo.java (logica_EJ04)
+@Override
+public Object getValueAt(int row, int col) {
+    Astronauta a = listaAstronautas.get(row);
+    switch (col) {
+        case 0: return a.getNombre();
+        case 1: return a.getMisiones();
+        case 2: return (a.getMisiones() >= 3) ? "Veterano" : "Aprendiz";
+        default: return null;
+    }
+}
+
+// DialogReclutamiento.java (interfaz_EJ04)
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    String nombre = jTextField1.getText().trim();
+    int misiones = (int) jSpinner1.getValue();
+    if (!nombre.isEmpty() && misiones >= 0) {
+        ventanaPadre.recibirAstronauta(new Astronauta(nombre, misiones));
+        this.dispose();
+    }
+}</code></pre>
+            </div>
+
+            <!-- EJERCICIOS EXTRA: Producto, VentanaRegistro, VentanaTablero, etc. -->
+            <div class="space-y-6 pt-4 border-t border-slate-200">
+                <div class="border-l-4 border-purple-500 pl-3">
+                    <h3 class="text-lg font-bold text-slate-900">5. Ejercicios Extra de Interfaz</h3>
+                    <p class="text-xs text-slate-500">Colección de ventanas auxiliares, validaciones complejas, sliders reactivos y teclados numéricos.</p>
+                </div>
+
+                <!-- Producto + VentanaRegistro -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">VentanaRegistro.java (interfaz) &amp; Producto.java (logica)</h4>
+                            <span class="text-xs text-slate-500">JSpinner con SpinnerNumberModel y selección única con JRadioButton.</span>
+                        </div>
+                        <button onclick="copyCode('code-extra-reg', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-extra-reg">private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    String nombre = jTextField1.getText().trim();
+    if (nombre.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Nombre obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
+    } else {
+        int cantidad = (int) jSpinner1.getValue();
+        String categoria = "";
+        if (jRadioButton1.isSelected()) categoria += "Alimentación ";
+        if (jRadioButton2.isSelected()) categoria += "Limpieza ";
+        if (jRadioButton3.isSelected()) categoria += "Electrónica ";
+        if (jRadioButton4.isSelected()) categoria += "Sin categoría ";
+        
+        Producto p = new Producto(nombre, cantidad, categoria);
+        System.out.println("Guardado: " + p);
+        this.dispose();
+    }
+}</code></pre>
+<a href="Diseño/VentanaPrincipal-Registro.pdf" class="enlace-animado">VentanaPrincipal-Registro</a>
+                </div>
+
+                <!-- VentanaTablero 3x3 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">VentanaTablero.java (interfaz)</h4>
+                            <span class="text-xs text-slate-500">Tres en raya interactivo con GridLayout(3, 3) y alternancia de turnos.</span>
+                        </div>
+                        <button onclick="copyCode('code-extra-tablero', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-extra-tablero">private boolean turno = true; // true: X, false: O
+
+private void pulsarCasilla(javax.swing.JButton boton) {
+    if (turno) {
+        boton.setText("X");
+        jLabel1.setText("Turno del Jugador O");
+    } else {
+        boton.setText("O");
+        jLabel1.setText("Turno del Jugador X");
+    }
+    boton.setEnabled(false);
+    turno = !turno;
+}</code></pre>
+<a href="Diseño/VentanaTablero.pdf" class="enlace-animado">VentanaTablero</a>
+                </div>
+
+                <!-- VentanaAgenda con DefaultTableModel -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">VentanaAgenda.java (interfaz)</h4>
+                            <span class="text-xs text-slate-500">Gestión de DefaultTableModel con addRow(), getSelectedRow() y removeRow().</span>
+                        </div>
+                        <button onclick="copyCode('code-extra-agenda', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-extra-agenda">// Añadir registro
+if (!nombre.isEmpty() &amp;&amp; telefono.matches("\\d{9}")) {
+    modelo.addRow(new Object[]{nombre, telefono});
+    jLabel1.setText("Contactos: " + modelo.getRowCount());
+}
+
+// Eliminar seleccionado con confirmación
+int fila = jTable1.getSelectedRow();
+if (fila != -1) {
+    int opt = JOptionPane.showConfirmDialog(this, "¿Eliminar contacto?", "Confirmar", JOptionPane.YES_NO_OPTION);
+    if (opt == JOptionPane.YES_OPTION) {
+        modelo.removeRow(fila);
+        jLabel1.setText("Contactos: " + modelo.getRowCount());
+    }
+}</code></pre>
+<a href="Diseño/VentanaAgenda.pdf" class="enlace-animado">VentanaAgenda</a>
+                </div>
+
+                <!-- VentanaUsuario -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">VentanaUsuario.java (interfaz)</h4>
+                            <span class="text-xs text-slate-500">Validaciones encadenadas de contraseñas y checkboxes.</span>
+                        </div>
+                        <button onclick="copyCode('code-extra-usuario', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-extra-usuario">private void botonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {
+    String usuario = fieldUsuario.getText().trim();
+    String p1 = new String(fieldContrasenia.getPassword());
+    String p2 = new String(fieldRepetirContrasenia.getPassword());
+
+    if (usuario.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "El usuario no puede estar vacío"); return;
+    }
+    if (p1.length() < 6 || !p1.equals(p2)) {
+        JOptionPane.showMessageDialog(this, "Contraseñas no coinciden o menores a 6 caracteres"); return;
+    }
+    if (!checkBox.isSelected()) {
+        JOptionPane.showMessageDialog(this, "Acepta las condiciones"); return;
+    }
+    JOptionPane.showMessageDialog(this, "Bienvenido, " + usuario + " (" + boxCurso.getSelectedItem() + ")");
+}</code></pre>
+<a href="Diseño/VentanaUsuario.pdf" class="enlace-animado">VentanaUsuario</a>
+                </div>
+
+                <!-- VentanaPropina -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">VentanaPropina.java (interfaz)</h4>
+                            <span class="text-xs text-slate-500">JSlider con ChangeListener reactivo y opción de redondeo con Math.ceil.</span>
+                        </div>
+                        <button onclick="copyCode('code-extra-propina', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-extra-propina">private void actualizarTotal() {
+    try {
+        double importe = Double.parseDouble(jTextField1.getText().trim());
+        int porcentaje = jSlider1.getValue();
+        double total = importe + (importe * (porcentaje / 100.0));
+        
+        if (jCheckBox2.isSelected()) total = Math.ceil(total);
+        jLabel3.setText("Total: " + String.format("%.2f", total) + " €");
+    } catch (NumberFormatException e) {
+        jLabel3.setText("Importe no válido");
+    }
+}
+
+private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {
+    jLabel2.setText("Propina: " + jSlider1.getValue() + " %");
+    actualizarTotal();
+}</code></pre>
+<a href="Diseño/VentanaPropina.pdf" class="enlace-animado">VentanaPropina</a>
+                </div>
+
+                <!-- VentanaPin -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">VentanaPin.java (interfaz)</h4>
+                            <span class="text-xs text-slate-500">Teclado numérico, bloqueo al 3er intento y manipulación de texto.</span>
+                        </div>
+                        <button onclick="copyCode('code-extra-pin', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-extra-pin">private void jOkActionPerformed(java.awt.event.ActionEvent evt) {
+    String pin = new String(jPasswordField1.getPassword());
+    if (pin.equals(PIN_CORRECTO)) {
+        JOptionPane.showMessageDialog(this, "Acceso concedido");
+        this.dispose();
+    } else {
+        intentos++;
+        jPasswordField1.setText("");
+        if (intentos >= 3) {
+            JOptionPane.showMessageDialog(this, "Tarjeta bloqueada", "Error", JOptionPane.ERROR_MESSAGE);
+            for (java.awt.Component c : jPanel1.getComponents()) c.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "PIN incorrecto. Intentos restantes: " + (3 - intentos));
+        }
+    }
+}</code></pre>
+<a href="Diseño/VentanaPin.pdf" class="enlace-animado">VentanaPin</a>
+                </div>
+
+                <!-- VentanaTareas -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">VentanaTareas.java (interfaz)</h4>
+                            <span class="text-xs text-slate-500">JList vinculado a DefaultListModel con validación de duplicados y menú Archivo.</span>
+                        </div>
+                        <button onclick="copyCode('code-extra-tareas', this)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i> Copiar Código
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-extra-tareas">// Añadir a JList
+String tarea = jTextField1.getText().trim();
+if (!tarea.isEmpty() &amp;&amp; !modelo.contains(tarea)) {
+    modelo.addElement(tarea);
+    jTextField1.setText("");
+    jLabel1.setText("Pendientes: " + modelo.size());
+}
+
+// Completar tarea seleccionada
+int index = jList1.getSelectedIndex();
+if (index != -1) {
+    modelo.remove(index);
+    jLabel1.setText("Pendientes: " + modelo.size());
+}</code></pre>
+<a href="Diseño/VentanaTareas.pdf" class="enlace-animado">VentanaTareas</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 6: AUTOEVALUACIÓN ==================== -->
+        <section id="content-test" class="tab-content hidden space-y-8">
+            <div class="bg-rose-900 text-white p-6 rounded-2xl shadow-xl border border-rose-800 flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-extrabold mb-1 flex items-center gap-3">
+                        <i class="fa-solid fa-list-check text-rose-400"></i> Autoevaluación de Usabilidad y Java Swing
+                    </h2>
+                    <p class="text-rose-200 text-xs">
+                        Comprueba tu comprensión sobre heurísticas de Nielsen, layouts, MVC y gestión de eventos.
+                    </p>
+                </div>
+                <div id="quiz-score" class="text-right hidden">
+                    <span class="text-2xl font-black text-rose-300" id="score-val">0/5</span>
+                    <span class="block text-[10px] text-rose-200 uppercase tracking-widest">Aciertos</span>
+                </div>
+            </div>
+
+            <div id="quiz-container" class="space-y-5">
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3" id="card-q1">
+                    <p class="font-bold text-xs text-slate-800">1. ¿Qué gestor de diseño (Layout) divide el contenedor en regiones cardinales (NORTH, SOUTH, EAST, WEST, CENTER) y es el predeterminado en JFrame?</p>
+                    <div class="space-y-2 text-xs text-slate-700">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="q1" value="A" class="text-brand-600"> A) FlowLayout
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="q1" value="B" class="text-brand-600"> B) BorderLayout
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="q1" value="C" class="text-brand-600"> C) GridLayout
+                        </label>
+                    </div>
+                    <div class="exp-box hidden text-xs p-3 rounded-lg mt-2 bg-slate-50 border border-slate-200"></div>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3" id="card-q2">
+                    <p class="font-bold text-xs text-slate-800">2. Según el patrón MVC en Java Swing, ¿dónde se deben añadir o eliminar los registros de una tabla JTable?</p>
+                    <div class="space-y-2 text-xs text-slate-700">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="q2" value="A" class="text-brand-600"> A) Directamente en el componente visual JTable.
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="q2" value="B" class="text-brand-600"> B) Exclusivamente sobre el Modelo (TableModel) asociado.
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="q2" value="C" class="text-brand-600"> C) En el JScrollPane que envuelve la tabla.
+                        </label>
+                    </div>
+                    <div class="exp-box hidden text-xs p-3 rounded-lg mt-2 bg-slate-50 border border-slate-200"></div>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3" id="card-q3">
+                    <p class="font-bold text-xs text-slate-800">3. ¿Qué representa la cualidad de 'Affordance' en una interfaz de usuario?</p>
+                    <div class="space-y-2 text-xs text-slate-700">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="q3" value="A" class="text-brand-600"> A) La velocidad a la que el servidor responde a las peticiones del cliente.
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="q3" value="B" class="text-brand-600"> B) La cualidad visual de un elemento que insinúa intuitivamente cómo debe utilizarse.
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="q3" value="C" class="text-brand-600"> C) El número de pantallas que componen un prototipo interactivo en Figma.
+                        </label>
+                    </div>
+                    <div class="exp-box hidden text-xs p-3 rounded-lg mt-2 bg-slate-50 border border-slate-200"></div>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3" id="card-q4">
+                    <p class="font-bold text-xs text-slate-800">4. ¿Qué establece la Ley de Fitts respecto al diseño de botones interactivos?</p>
+                    <div class="space-y-2 text-xs text-slate-700">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="q4" value="A" class="text-brand-600"> A) Los botones deben ser pequeños para dejar mayor espacio en blanco.
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="q4" value="B" class="text-brand-600"> B) Los botones críticos deben ser grandes y situarse cerca de la zona de interacción.
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="q4" value="C" class="text-brand-600"> C) Todo botón debe tener obligatoriamente un icono descriptivo y un atajo de teclado.
+                        </label>
+                    </div>
+                    <div class="exp-box hidden text-xs p-3 rounded-lg mt-2 bg-slate-50 border border-slate-200"></div>
+                </div>
+
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3" id="card-q5">
+                    <p class="font-bold text-xs text-slate-800">5. ¿Qué método de AbstractTableModel notifica a la vista visual que la lista interna ha cambiado y debe redibujarse?</p>
+                    <div class="space-y-2 text-xs text-slate-700">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="q5" value="A" class="text-brand-600"> A) fireTableDataChanged()
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="q5" value="B" class="text-brand-600"> B) updateUI()
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="q5" value="C" class="text-brand-600"> C) repaintNow()
+                        </label>
+                    </div>
+                    <div class="exp-box hidden text-xs p-3 rounded-lg mt-2 bg-slate-50 border border-slate-200"></div>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4">
+                <button onclick="resetQuiz()" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-xs font-bold transition-all">
+                    <i class="fa-solid fa-rotate-left mr-1.5"></i> Reiniciar
+                </button>
+                <button onclick="evaluateQuiz()" class="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold shadow-lg shadow-brand-500/30 transition-all">
+                    <i class="fa-solid fa-check-double mr-1.5"></i> Corregir Test
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Component -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-1">
+            <p>Módulo de Desarrollo de Interfaces (DI) &bull; Ciclo Formativo DAM / DAW</p>
+            <p class="text-slate-600">Unidad Temática 1: Arquitectura de la Información, Usabilidad, XML y Prácticas Java Swing.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+            const targetBtn = document.getElementById(`tab-${tabId}`);
+            const targetContent = document.getElementById(`content-${tabId}`);
+            if (targetBtn) targetBtn.classList.add('active');
+            if (targetContent) targetContent.classList.remove('hidden');
+        }
+
+        function copyCode(elementId, btn) {
+            const codeEl = document.getElementById(elementId);
+            if (!codeEl) return;
+            const codeText = codeEl.innerText;
+            const textArea = document.createElement("textarea");
+            textArea.value = codeText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-check text-emerald-600"></i> ¡Copiado!`;
+            btn.classList.add('bg-emerald-50', 'text-emerald-700');
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.remove('bg-emerald-50', 'text-emerald-700');
+            }, 2000);
+        }
+
+        const quizAnswers = {
+            q1: { correct: "B", exp: "BorderLayout divide el espacio en cinco áreas y es el gestor por defecto de JFrame." },
+            q2: { correct: "B", exp: "En el patrón MVC, los datos nunca se agregan al JTable directamente, sino a través del TableModel que notifica el redibujado." },
+            q3: { correct: "B", exp: "El Affordance es la cualidad visual intuitiva que insinúa cómo debe accionarse un control interactivo." },
+            q4: { correct: "B", exp: "La Ley de Fitts determina que los controles críticos deben ser de gran tamaño y estar cerca del usuario." },
+            q5: { correct: "A", exp: "fireTableDataChanged() avisa a los oyentes de la tabla que la estructura de filas ha sido modificada para refrescar la interfaz." }
+        };
+
+        function evaluateQuiz() {
+            let score = 0;
+            const total = Object.keys(quizAnswers).length;
+
+            for (const [key, data] of Object.entries(quizAnswers)) {
+                const selected = document.querySelector(`input[name="${key}"]:checked`);
+                const card = document.getElementById(`card-${key}`);
+                const expBox = card.querySelector('.exp-box');
+                expBox.classList.remove('hidden');
+
+                if (selected && selected.value === data.correct) {
+                    score++;
+                    card.className = "bg-emerald-50 p-5 rounded-xl border border-emerald-300 shadow-sm space-y-3";
+                    expBox.innerHTML = `<span class="text-emerald-800 font-bold">¡Correcto!</span> ${data.exp}`;
+                } else {
+                    card.className = "bg-rose-50 p-5 rounded-xl border border-rose-300 shadow-sm space-y-3";
+                    expBox.innerHTML = `<span class="text-rose-800 font-bold">Incorrecto.</span> ${data.exp}`;
+                }
+            }
+
+            const scoreContainer = document.getElementById('quiz-score');
+            const scoreVal = document.getElementById('score-val');
+            scoreContainer.classList.remove('hidden');
+            scoreVal.innerText = `${score} / ${total}`;
+        }
+
+        function resetQuiz() {
+            document.querySelectorAll('#quiz-container input[type="radio"]').forEach(radio => radio.checked = false);
+            document.querySelectorAll('#quiz-container .exp-box').forEach(box => {
+                box.classList.add('hidden');
+                box.innerHTML = '';
+            });
+            document.querySelectorAll('#quiz-container > div').forEach(card => {
+                card.className = "bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3";
+            });
+            document.getElementById('quiz-score').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
