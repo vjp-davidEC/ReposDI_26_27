@@ -135,8 +135,11 @@
                 <button onclick="switchTab('extra')" id="tab-extra" class="tab-btn px-4 py-3 text-sm font-medium text-slate-300 hover:text-white border-b-2 border-transparent transition-all flex items-center gap-2">
                     <i class="fa-solid fa-folder-tree text-purple-400"></i> 5. Modales, Tablas y Extras
                 </button>
+                <button onclick="switchTab('repaso')" id="tab-repaso" class="tab-btn px-4 py-3 text-sm font-medium text-slate-300 hover:text-white border-b-2 border-transparent transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-book-open text-cyan-400"></i> 6. Repaso
+                </button>
                 <button onclick="switchTab('test')" id="tab-test" class="tab-btn px-4 py-3 text-sm font-medium text-slate-300 hover:text-white border-b-2 border-transparent transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-list-check text-rose-400"></i> 6. Autoevaluación
+                    <i class="fa-solid fa-list-check text-rose-400"></i> 7. Evaluación
                 </button>
             </div>
         </nav>
@@ -1325,7 +1328,816 @@ if (index != -1) {
             </div>
         </section>
 
-        <!-- ==================== TAB 6: AUTOEVALUACIÓN ==================== -->
+        <!-- ==================== TAB 6: REPASO ==================== -->
+        <section id="content-repaso" class="tab-content hidden space-y-8">
+            <div class="bg-cyan-950 text-white p-6 rounded-2xl shadow-xl border border-cyan-800">
+                <h2 class="text-2xl font-extrabold mb-2 flex items-center gap-3">
+                    <i class="fa-solid fa-book-open text-cyan-300"></i> 6. REPASO · Ejercicios prácticos Java Swing
+                </h2>
+                <p class="text-cyan-100 text-sm max-w-3xl leading-relaxed">
+                    Ocho ejercicios nuevos para practicar los contenidos de los puntos 4 y 5: formularios, clases, colecciones,
+                    herencia, eventos, diálogos modales y tablas. Intenta resolverlos antes de consultar tus apuntes.
+                </p>
+            </div>
+
+            <div class="bg-cyan-50 border border-cyan-200 rounded-xl p-5 text-sm text-cyan-950">
+                <strong>Cómo trabajar:</strong> crea los formularios con el diseñador de NetBeans, coloca los componentes indicados
+                y programa los eventos. Los nombres de componentes son orientativos; si usas otros, adapta el código.
+                Separa las clases de datos de las ventanas siempre que el ejercicio lo pida.
+            </div>
+
+            <!-- REPASO 1 -->
+            <article class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                    <span class="bg-cyan-100 text-cyan-800 rounded-lg px-3 py-1 font-bold text-sm">1</span>
+                    <div>
+                        <h3 class="font-bold text-slate-900">Registro de alumnos</h3>
+                        <p class="text-xs text-slate-500">Clases, encapsulación, validaciones y try-catch.</p>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-700">Crea una aplicación para registrar alumnos y mostrar si han aprobado.</p>
+                <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
+                    <li>Crea la clase <code>Alumno</code> con los atributos privados <code>nombre</code>, <code>edad</code> y <code>nota</code>.</li>
+                    <li>Añade constructor, getters y el método <code>aprobado()</code>, que devuelva <code>true</code> si la nota es 5 o superior.</li>
+                    <li>En el formulario incluye tres <code>JTextField</code>, un botón «Registrar» y un <code>JLabel</code> para el resultado.</li>
+                    <li>Comprueba que el nombre no esté vacío, que la edad sea positiva y que la nota esté entre 0 y 10.</li>
+                    <li>Utiliza <code>try-catch</code> para controlar los datos numéricos incorrectos y muestra los datos del alumno.</li>
+                </ul>
+                <div class="bg-slate-50 rounded-lg p-3 text-xs text-slate-600"><strong>Componentes:</strong> JTextField × 3, JButton, JLabel.</div>
+            </article>
+
+            <!-- REPASO 2 -->
+            <article class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                    <span class="bg-cyan-100 text-cyan-800 rounded-lg px-3 py-1 font-bold text-sm">2</span>
+                    <div>
+                        <h3 class="font-bold text-slate-900">Catálogo de videojuegos</h3>
+                        <p class="text-xs text-slate-500">ArrayList, objetos, JComboBox y JTextArea.</p>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-700">Desarrolla un pequeño catálogo que permita guardar videojuegos en memoria.</p>
+                <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
+                    <li>Crea la clase <code>Videojuego</code> con título, plataforma y horas de juego, con atributos privados y constructor.</li>
+                    <li>En la ventana declara un <code>ArrayList&lt;Videojuego&gt;</code>.</li>
+                    <li>Incluye un campo para el título, otro para las horas, un <code>JComboBox</code> con plataformas y un botón para añadir.</li>
+                    <li>Al pulsar el botón, valida los datos, crea el objeto y guárdalo en el ArrayList.</li>
+                    <li>Muestra todo el catálogo en un <code>JTextArea</code> y el número total de videojuegos registrados.</li>
+                </ul>
+                <div class="bg-slate-50 rounded-lg p-3 text-xs text-slate-600"><strong>Componentes:</strong> JTextField × 2, JComboBox, JButton, JTextArea.</div>
+            </article>
+
+            <!-- REPASO 3 -->
+            <article class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                    <span class="bg-cyan-100 text-cyan-800 rounded-lg px-3 py-1 font-bold text-sm">3</span>
+                    <div>
+                        <h3 class="font-bold text-slate-900">Combate de personajes</h3>
+                        <p class="text-xs text-slate-500">Herencia, clase abstracta y polimorfismo.</p>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-700">Crea una aplicación sencilla para elegir un personaje y realizar un ataque contra un enemigo.</p>
+                <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
+                    <li>Define una clase abstracta <code>Personaje</code> con nombre, fuerza y vida.</li>
+                    <li>Declara el método abstracto <code>ataca(Personaje objetivo)</code> y un método <code>vivo()</code>.</li>
+                    <li>Crea las subclases <code>Guerrero</code>, <code>Mago</code> y <code>Arquero</code>, cada una con una forma de atacar.</li>
+                    <li>Utiliza un <code>JComboBox</code> para seleccionar el tipo de personaje y crea el objeto correspondiente.</li>
+                    <li>Al pulsar «Atacar», ejecuta el método polimórfico y muestra el resultado en un <code>JTextArea</code>.</li>
+                    <li>Evita que un personaje sin vida pueda seguir participando en el combate.</li>
+                </ul>
+                <div class="bg-slate-50 rounded-lg p-3 text-xs text-slate-600"><strong>Componentes:</strong> JTextField, JComboBox, JButton, JTextArea, JLabel.</div>
+            </article>
+
+            <!-- REPASO 4 -->
+            <article class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                    <span class="bg-cyan-100 text-cyan-800 rounded-lg px-3 py-1 font-bold text-sm">4</span>
+                    <div>
+                        <h3 class="font-bold text-slate-900">Juego de memoria 3 × 3</h3>
+                        <p class="text-xs text-slate-500">GridLayout, JButton, arrays y eventos.</p>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-700">Construye un tablero de nueve botones para encontrar parejas de símbolos iguales.</p>
+                <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
+                    <li>Organiza nueve botones en un panel con <code>GridLayout(3, 3)</code>.</li>
+                    <li>Guarda los símbolos ocultos en un array y coloca dos apariciones de cada uno de cuatro símbolos, más una casilla adicional que puedes usar como comodín o adaptar a tu diseño.</li>
+                    <li>Al pulsar una casilla, muestra su símbolo y desactiva temporalmente el botón.</li>
+                    <li>Controla las dos selecciones realizadas y comprueba si forman una pareja.</li>
+                    <li>Si coinciden, deja las casillas descubiertas; si no, vuelve a ocultarlas y permite seguir jugando.</li>
+                    <li>Muestra un mensaje cuando se hayan encontrado todas las parejas.</li>
+                </ul>
+                <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-900"><strong>Nota:</strong> nueve casillas no permiten formar únicamente parejas. Puedes cambiar el tablero a 4 × 4 para tener ocho parejas, o definir expresamente qué ocurre con la novena casilla.</div>
+            </article>
+
+            <!-- REPASO 5 -->
+            <article class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                    <span class="bg-cyan-100 text-cyan-800 rounded-lg px-3 py-1 font-bold text-sm">5</span>
+                    <div>
+                        <h3 class="font-bold text-slate-900">Gestión de empleados con diálogo modal</h3>
+                        <p class="text-xs text-slate-500">JDialog, comunicación entre ventanas y validación.</p>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-700">Crea una ventana principal que muestre los datos de un empleado y un diálogo para modificarlos.</p>
+                <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
+                    <li>La ventana principal tendrá etiquetas para nombre, departamento y salario, y un botón «Editar empleado».</li>
+                    <li>Crea un formulario <code>DialogEmpleado</code> que extienda <code>JDialog</code> y se abra como modal.</li>
+                    <li>El diálogo tendrá campos para nombre, departamento y salario, además de botones «Guardar» y «Cancelar».</li>
+                    <li>Valida que el nombre y el departamento no estén vacíos y que el salario sea un número positivo.</li>
+                    <li>Al guardar, llama a un método de la ventana principal para actualizar las etiquetas y cierra el diálogo.</li>
+                </ul>
+                <div class="bg-slate-50 rounded-lg p-3 text-xs text-slate-600"><strong>Conceptos clave:</strong> <code>new DialogEmpleado(this, true)</code>, constructor con ventana padre y método público de actualización.</div>
+            </article>
+
+            <!-- REPASO 6 -->
+            <article class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                    <span class="bg-cyan-100 text-cyan-800 rounded-lg px-3 py-1 font-bold text-sm">6</span>
+                    <div>
+                        <h3 class="font-bold text-slate-900">Catálogo de películas con AbstractTableModel</h3>
+                        <p class="text-xs text-slate-500">JTable, modelo personalizado y objetos.</p>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-700">Muestra un catálogo de películas en una tabla, separando los datos del componente visual.</p>
+                <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
+                    <li>Crea la clase <code>Pelicula</code> con título, director y año.</li>
+                    <li>Crea <code>ModeloPeliculas</code> extendiendo <code>AbstractTableModel</code> y guarda las películas en una lista.</li>
+                    <li>Implementa <code>getRowCount()</code>, <code>getColumnCount()</code>, <code>getColumnName()</code> y <code>getValueAt()</code>.</li>
+                    <li>Asigna el modelo a la tabla mediante <code>jTable1.setModel(modelo)</code>.</li>
+                    <li>Añade un método para incorporar películas y notificar los cambios con <code>fireTableDataChanged()</code>.</li>
+                </ul>
+                <div class="bg-slate-50 rounded-lg p-3 text-xs text-slate-600"><strong>Componentes:</strong> JTable dentro de JScrollPane. Clases separadas para Pelicula y ModeloPeliculas.</div>
+            </article>
+
+            <!-- REPASO 7 -->
+            <article class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                    <span class="bg-cyan-100 text-cyan-800 rounded-lg px-3 py-1 font-bold text-sm">7</span>
+                    <div>
+                        <h3 class="font-bold text-slate-900">Agenda de contactos con diálogo y tabla</h3>
+                        <p class="text-xs text-slate-500">JDialog modal, AbstractTableModel, selección y confirmación.</p>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-700">Desarrolla una agenda donde se puedan añadir contactos desde un diálogo y eliminar el contacto seleccionado.</p>
+                <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
+                    <li>Crea la clase <code>Contacto</code> con nombre y teléfono.</li>
+                    <li>Implementa un modelo que extienda <code>AbstractTableModel</code>, almacene contactos y permita añadir y eliminar.</li>
+                    <li>La ventana principal tendrá una <code>JTable</code> y los botones «Añadir» y «Eliminar».</li>
+                    <li>«Añadir» abrirá un <code>JDialog</code> modal con los campos del contacto.</li>
+                    <li>Valida el nombre y que el teléfono tenga nueve dígitos; al guardar, comunica el nuevo contacto a la ventana padre.</li>
+                    <li>«Eliminar» debe comprobar que hay una fila seleccionada y pedir confirmación con <code>JOptionPane.showConfirmDialog()</code>.</li>
+                    <li>Tras añadir o eliminar, actualiza el modelo con <code>fireTableDataChanged()</code>.</li>
+                </ul>
+                <div class="bg-slate-50 rounded-lg p-3 text-xs text-slate-600"><strong>Importante:</strong> si permites ordenar la tabla, convierte el índice de vista al índice del modelo con <code>convertRowIndexToModel()</code> antes de eliminar.</div>
+            </article>
+
+            <!-- REPASO 8 -->
+            <article class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                    <span class="bg-cyan-100 text-cyan-800 rounded-lg px-3 py-1 font-bold text-sm">8</span>
+                    <div>
+                        <h3 class="font-bold text-slate-900">Registro de astronautas y categoría calculada</h3>
+                        <p class="text-xs text-slate-500">JSpinner, JDialog, JTable y lógica en el modelo.</p>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-700">Crea una aplicación para registrar astronautas y clasificarlos según el número de misiones realizadas.</p>
+                <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
+                    <li>Crea la clase <code>Astronauta</code> con nombre, número de misiones y edad.</li>
+                    <li>Diseña un modelo de tabla con las columnas Nombre, Misiones, Edad y Categoría.</li>
+                    <li>La categoría se calculará desde <code>getValueAt()</code>: «Veterano» si tiene tres misiones o más y «Aprendiz» si tiene menos.</li>
+                    <li>La ventana principal mostrará la tabla y un botón «Nuevo astronauta».</li>
+                    <li>El botón abrirá un diálogo modal con nombre, misiones y edad. Usa <code>JSpinner</code> para los valores numéricos.</li>
+                    <li>Valida los datos, añade el astronauta al modelo y notifica el cambio para refrescar la tabla.</li>
+                </ul>
+                <div class="bg-slate-50 rounded-lg p-3 text-xs text-slate-600"><strong>Concepto clave:</strong> la categoría es un dato calculado; no hace falta almacenarla como atributo si se puede obtener a partir del número de misiones.</div>
+            </article>
+
+            <div class="bg-slate-900 text-white rounded-xl p-5 space-y-2">
+                <h3 class="font-bold text-base"><i class="fa-solid fa-graduation-cap text-cyan-300 mr-2"></i>Reto final de repaso</h3>
+                <p class="text-sm text-slate-300">Cuando termines los ocho ejercicios, intenta crear una aplicación que combine un formulario modal, una lista de objetos y una JTable con un modelo personalizado. Añade validaciones y una opción para eliminar registros con confirmación.</p>
+            </div>
+
+            <div class="pt-6 border-t-2 border-cyan-200 space-y-6">
+                <div class="bg-emerald-900 text-white p-5 rounded-xl">
+                    <h3 class="text-xl font-extrabold"><i class="fa-solid fa-code mr-2 text-emerald-300"></i>SOLUCIONES DEL REPASO</h3>
+                    <p class="text-emerald-100 text-sm mt-1">Código de referencia para los ocho ejercicios. Crea cada clase en su archivo .java y adapta los nombres de los componentes a los de tu formulario de NetBeans.</p>
+                </div>
+
+                <!-- SOLUCIÓN 1 -->
+                <article class="bg-white rounded-xl p-6 shadow-sm border border-emerald-200 space-y-3">
+                    <h3 class="font-bold text-slate-900">Solución 1. Registro de alumnos</h3>
+                    <p class="text-xs text-slate-500">Alumno.java y evento del botón Registrar.</p>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code>// Alumno.java
+public class Alumno {
+    private String nombre;
+    private int edad;
+    private double nota;
+
+    public Alumno(String nombre, int edad, double nota) {
+        this.nombre = nombre;
+        this.edad = edad;
+        this.nota = nota;
+    }
+
+    public String getNombre() { return nombre; }
+    public int getEdad() { return edad; }
+    public double getNota() { return nota; }
+
+    public boolean aprobado() {
+        return nota >= 5;
+    }
+
+    @Override
+    public String toString() {
+        return nombre + " (" + edad + " años) - Nota: " + nota
+                + " - " + (aprobado() ? "Aprobado" : "Suspenso");
+    }
+}
+
+// Evento del botón Registrar
+private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {
+    try {
+        String nombre = jTextFieldNombre.getText().trim();
+        int edad = Integer.parseInt(jTextFieldEdad.getText().trim());
+        double nota = Double.parseDouble(jTextFieldNota.getText().trim());
+
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Escribe el nombre");
+        } else if (edad <= 0) {
+            JOptionPane.showMessageDialog(this, "La edad debe ser positiva");
+        } else if (nota < 0 || nota > 10) {
+            JOptionPane.showMessageDialog(this, "La nota debe estar entre 0 y 10");
+        } else {
+            Alumno a = new Alumno(nombre, edad, nota);
+            jLabelResultado.setText(a.toString());
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Edad y nota deben ser números");
+    }
+}</code></pre>
+                </article>
+
+                <!-- SOLUCIÓN 2 -->
+                <article class="bg-white rounded-xl p-6 shadow-sm border border-emerald-200 space-y-3">
+                    <h3 class="font-bold text-slate-900">Solución 2. Catálogo de videojuegos</h3>
+                    <p class="text-xs text-slate-500">Videojuego.java y código de la ventana.</p>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code>// Videojuego.java
+public class Videojuego {
+    private String titulo;
+    private String plataforma;
+    private int horas;
+
+    public Videojuego(String titulo, String plataforma, int horas) {
+        this.titulo = titulo;
+        this.plataforma = plataforma;
+        this.horas = horas;
+    }
+
+    @Override
+    public String toString() {
+        return titulo + " | " + plataforma + " | " + horas + " horas";
+    }
+}
+
+// En la clase de la ventana
+private ArrayList&lt;Videojuego&gt; catalogo = new ArrayList&lt;&gt;();
+
+public VentanaVideojuegos() {
+    initComponents();
+    jComboBoxPlataforma.setModel(new javax.swing.DefaultComboBoxModel&lt;&gt;(
+        new String[] {"PC", "PlayStation", "Xbox", "Nintendo Switch"}
+    ));
+}
+
+private void jButtonAnadirActionPerformed(java.awt.event.ActionEvent evt) {
+    try {
+        String titulo = jTextFieldTitulo.getText().trim();
+        int horas = Integer.parseInt(jTextFieldHoras.getText().trim());
+        String plataforma = jComboBoxPlataforma.getSelectedItem().toString();
+
+        if (titulo.isEmpty() || horas < 0) {
+            JOptionPane.showMessageDialog(this, "Introduce datos válidos");
+            return;
+        }
+
+        catalogo.add(new Videojuego(titulo, plataforma, horas));
+        mostrarCatalogo();
+        jTextFieldTitulo.setText("");
+        jTextFieldHoras.setText("");
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Las horas deben ser un número entero");
+    }
+}
+
+private void mostrarCatalogo() {
+    jTextAreaCatalogo.setText("CATÁLOGO DE VIDEOJUEGOS\n");
+    for (Videojuego v : catalogo) {
+        jTextAreaCatalogo.append(v + "\n");
+    }
+    jTextAreaCatalogo.append("\nTotal: " + catalogo.size());
+}</code></pre>
+                </article>
+
+                <!-- SOLUCIÓN 3 -->
+                <article class="bg-white rounded-xl p-6 shadow-sm border border-emerald-200 space-y-3">
+                    <h3 class="font-bold text-slate-900">Solución 3. Combate de personajes</h3>
+                    <p class="text-xs text-slate-500">Clase abstracta y tres subclases. Ejemplo sencillo de polimorfismo.</p>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code>// Personaje.java
+public abstract class Personaje {
+    protected String nombre;
+    protected int fuerza;
+    protected int vida;
+
+    public Personaje(String nombre, int fuerza, int vida) {
+        this.nombre = nombre;
+        this.fuerza = fuerza;
+        this.vida = vida;
+    }
+
+    public boolean vivo() { return vida > 0; }
+    public String getNombre() { return nombre; }
+
+    public abstract String ataca(Personaje objetivo);
+}
+
+// Guerrero.java
+public class Guerrero extends Personaje {
+    public Guerrero(String nombre) { super(nombre, 8, 30); }
+
+    @Override
+    public String ataca(Personaje objetivo) {
+        int danio = fuerza;
+        objetivo.vida = Math.max(0, objetivo.vida - danio);
+        return nombre + " golpea con su espada. Daño: " + danio;
+    }
+}
+
+// Mago.java
+public class Mago extends Personaje {
+    public Mago(String nombre) { super(nombre, 10, 20); }
+
+    @Override
+    public String ataca(Personaje objetivo) {
+        int danio = fuerza;
+        objetivo.vida = Math.max(0, objetivo.vida - danio);
+        return nombre + " lanza un hechizo. Daño: " + danio;
+    }
+}
+
+// Arquero.java
+public class Arquero extends Personaje {
+    public Arquero(String nombre) { super(nombre, 7, 25); }
+
+    @Override
+    public String ataca(Personaje objetivo) {
+        int danio = fuerza;
+        objetivo.vida = Math.max(0, objetivo.vida - danio);
+        return nombre + " dispara una flecha. Daño: " + danio;
+    }
+}
+
+// En la ventana: atributos de clase
+private Personaje jugador;
+private Personaje enemigo = new Guerrero("Enemigo");
+
+// Botón Crear personaje
+private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {
+    String nombre = jTextFieldNombre.getText().trim();
+    if (nombre.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Escribe un nombre");
+        return;
+    }
+
+    String tipo = jComboBoxTipo.getSelectedItem().toString();
+    if (tipo.equals("Guerrero")) jugador = new Guerrero(nombre);
+    else if (tipo.equals("Mago")) jugador = new Mago(nombre);
+    else jugador = new Arquero(nombre);
+
+    jTextAreaCombate.setText("Has creado un " + tipo + ": " + nombre);
+}
+
+// Botón Atacar
+private void jButtonAtacarActionPerformed(java.awt.event.ActionEvent evt) {
+    if (jugador == null) {
+        JOptionPane.showMessageDialog(this, "Primero crea tu personaje");
+        return;
+    }
+    if (!jugador.vivo() || !enemigo.vivo()) {
+        JOptionPane.showMessageDialog(this, "El combate ha terminado");
+        return;
+    }
+
+    jTextAreaCombate.append("\n" + jugador.ataca(enemigo));
+    if (!enemigo.vivo()) {
+        jTextAreaCombate.append("\n¡Has ganado!");
+    } else {
+        jTextAreaCombate.append("\nVida del enemigo: " + enemigo.vida);
+    }
+}</code></pre>
+                </article>
+
+                <!-- SOLUCIÓN 4 -->
+                <article class="bg-white rounded-xl p-6 shadow-sm border border-emerald-200 space-y-3">
+                    <h3 class="font-bold text-slate-900">Solución 4. Juego de memoria</h3>
+                    <p class="text-xs text-slate-500">Versión 4 × 4 para disponer de ocho parejas. Añade 16 botones al panel con GridLayout(4,4).</p>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code>// Atributos de la ventana
+private JButton[] botones = new JButton[16];
+private String[] simbolos = {
+    "A","B","C","D","E","F","G","H",
+    "A","B","C","D","E","F","G","H"
+};
+private int primera = -1;
+private int parejas = 0;
+private boolean bloqueado = false;
+
+private void prepararTablero() {
+    jPanelTablero.setLayout(new java.awt.GridLayout(4, 4, 5, 5));
+    java.util.Collections.shuffle(java.util.Arrays.asList(simbolos));
+
+    for (int i = 0; i &lt; 16; i++) {
+        final int posicion = i;
+        botones[i] = new JButton("?");
+        botones[i].addActionListener(e -&gt; seleccionar(posicion));
+        jPanelTablero.add(botones[i]);
+    }
+}
+
+private void seleccionar(int posicion) {
+    if (bloqueado || !botones[posicion].isEnabled()) return;
+
+    botones[posicion].setText(simbolos[posicion]);
+
+    if (primera == -1) {
+        primera = posicion;
+        return;
+    }
+
+    int segunda = posicion;
+    if (simbolos[primera].equals(simbolos[segunda])) {
+        botones[primera].setEnabled(false);
+        botones[segunda].setEnabled(false);
+        parejas++;
+        primera = -1;
+
+        if (parejas == 8) {
+            JOptionPane.showMessageDialog(this, "¡Has encontrado todas las parejas!");
+        }
+    } else {
+        bloqueado = true;
+        // Pausa breve sin bloquear la interfaz
+        javax.swing.Timer timer = new javax.swing.Timer(800, e -&gt; {
+            botones[primera].setText("?");
+            botones[segunda].setText("?");
+            primera = -1;
+            bloqueado = false;
+        });
+        timer.setRepeats(false);
+        timer.start();
+    }
+}</code></pre>
+                    <p class="text-xs text-slate-500">Llama a <code>prepararTablero()</code> después de <code>initComponents()</code>. El panel debe estar vacío antes de añadir los botones.</p>
+                </article>
+
+                <!-- SOLUCIÓN 5 -->
+                <article class="bg-white rounded-xl p-6 shadow-sm border border-emerald-200 space-y-3">
+                    <h3 class="font-bold text-slate-900">Solución 5. Empleados con JDialog modal</h3>
+                    <p class="text-xs text-slate-500">Comunicación del diálogo hacia la ventana principal.</p>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code>// VentanaPrincipal.java
+public void actualizarEmpleado(String nombre, String departamento, double salario) {
+    jLabelNombre.setText("Nombre: " + nombre);
+    jLabelDepartamento.setText("Departamento: " + departamento);
+    jLabelSalario.setText(String.format("Salario: %.2f €", salario));
+}
+
+private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {
+    new DialogEmpleado(this, true).setVisible(true);
+}
+
+// DialogEmpleado.java
+public class DialogEmpleado extends javax.swing.JDialog {
+    private VentanaPrincipal ventanaPadre;
+
+    public DialogEmpleado(VentanaPrincipal padre, boolean modal) {
+        super(padre, modal);
+        initComponents();
+        ventanaPadre = padre;
+        setLocationRelativeTo(padre);
+    }
+
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            String nombre = jTextFieldNombre.getText().trim();
+            String departamento = jTextFieldDepartamento.getText().trim();
+            double salario = Double.parseDouble(jTextFieldSalario.getText().trim());
+
+            if (nombre.isEmpty() || departamento.isEmpty() || salario <= 0) {
+                JOptionPane.showMessageDialog(this, "Completa los datos correctamente");
+                return;
+            }
+
+            ventanaPadre.actualizarEmpleado(nombre, departamento, salario);
+            dispose();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El salario debe ser numérico");
+        }
+    }
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {
+        dispose();
+    }
+}</code></pre>
+                </article>
+
+                <!-- SOLUCIÓN 6 -->
+                <article class="bg-white rounded-xl p-6 shadow-sm border border-emerald-200 space-y-3">
+                    <h3 class="font-bold text-slate-900">Solución 6. Películas con AbstractTableModel</h3>
+                    <p class="text-xs text-slate-500">Entidad, modelo personalizado y conexión con JTable.</p>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code>// Pelicula.java
+public class Pelicula {
+    private String titulo;
+    private String director;
+    private int anio;
+
+    public Pelicula(String titulo, String director, int anio) {
+        this.titulo = titulo;
+        this.director = director;
+        this.anio = anio;
+    }
+
+    public String getTitulo() { return titulo; }
+    public String getDirector() { return director; }
+    public int getAnio() { return anio; }
+}
+
+// ModeloPeliculas.java
+public class ModeloPeliculas extends javax.swing.table.AbstractTableModel {
+    private ArrayList&lt;Pelicula&gt; peliculas = new ArrayList&lt;&gt;();
+    private String[] columnas = {"Título", "Director", "Año"};
+
+    @Override
+    public int getRowCount() { return peliculas.size(); }
+
+    @Override
+    public int getColumnCount() { return columnas.length; }
+
+    @Override
+    public String getColumnName(int columna) {
+        return columnas[columna];
+    }
+
+    @Override
+    public Object getValueAt(int fila, int columna) {
+        Pelicula p = peliculas.get(fila);
+        switch (columna) {
+            case 0: return p.getTitulo();
+            case 1: return p.getDirector();
+            case 2: return p.getAnio();
+            default: return null;
+        }
+    }
+
+    public void anadirPelicula(Pelicula p) {
+        peliculas.add(p);
+        fireTableDataChanged();
+    }
+}
+
+// En VentanaPeliculas.java
+private ModeloPeliculas modelo = new ModeloPeliculas();
+
+public VentanaPeliculas() {
+    initComponents();
+    jTable1.setModel(modelo);
+}
+
+private void jButtonAnadirActionPerformed(java.awt.event.ActionEvent evt) {
+    try {
+        String titulo = jTextFieldTitulo.getText().trim();
+        String director = jTextFieldDirector.getText().trim();
+        int anio = Integer.parseInt(jTextFieldAnio.getText().trim());
+
+        if (titulo.isEmpty() || director.isEmpty() || anio &lt;= 0) {
+            JOptionPane.showMessageDialog(this, "Datos no válidos");
+            return;
+        }
+
+        modelo.anadirPelicula(new Pelicula(titulo, director, anio));
+        jTextFieldTitulo.setText("");
+        jTextFieldDirector.setText("");
+        jTextFieldAnio.setText("");
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El año debe ser un número");
+    }
+}</code></pre>
+                </article>
+
+                <!-- SOLUCIÓN 7 -->
+                <article class="bg-white rounded-xl p-6 shadow-sm border border-emerald-200 space-y-3">
+                    <h3 class="font-bold text-slate-900">Solución 7. Agenda de contactos con diálogo y tabla</h3>
+                    <p class="text-xs text-slate-500">Modelo, ventana principal y diálogo de alta.</p>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code>// Contacto.java
+public class Contacto {
+    private String nombre;
+    private String telefono;
+
+    public Contacto(String nombre, String telefono) {
+        this.nombre = nombre;
+        this.telefono = telefono;
+    }
+    public String getNombre() { return nombre; }
+    public String getTelefono() { return telefono; }
+}
+
+// ModeloContactos.java
+public class ModeloContactos extends javax.swing.table.AbstractTableModel {
+    private ArrayList&lt;Contacto&gt; contactos = new ArrayList&lt;&gt;();
+    private String[] columnas = {"Nombre", "Teléfono"};
+
+    @Override public int getRowCount() { return contactos.size(); }
+    @Override public int getColumnCount() { return columnas.length; }
+    @Override public String getColumnName(int c) { return columnas[c]; }
+
+    @Override
+    public Object getValueAt(int fila, int columna) {
+        Contacto c = contactos.get(fila);
+        if (columna == 0) return c.getNombre();
+        if (columna == 1) return c.getTelefono();
+        return null;
+    }
+
+    public void anadir(Contacto c) {
+        contactos.add(c);
+        fireTableDataChanged();
+    }
+
+    public void eliminar(int fila) {
+        contactos.remove(fila);
+        fireTableDataChanged();
+    }
+}
+
+// VentanaAgenda.java
+private ModeloContactos modelo = new ModeloContactos();
+
+public VentanaAgenda() {
+    initComponents();
+    jTable1.setModel(modelo);
+}
+
+public void recibirContacto(Contacto c) {
+    modelo.anadir(c);
+}
+
+private void jButtonAnadirActionPerformed(java.awt.event.ActionEvent evt) {
+    new DialogContacto(this, true).setVisible(true);
+}
+
+private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {
+    int filaVista = jTable1.getSelectedRow();
+    if (filaVista == -1) {
+        JOptionPane.showMessageDialog(this, "Selecciona un contacto");
+        return;
+    }
+
+    int filaModelo = jTable1.convertRowIndexToModel(filaVista);
+    int opcion = JOptionPane.showConfirmDialog(this, "¿Eliminar el contacto?",
+            "Confirmar", JOptionPane.YES_NO_OPTION);
+
+    if (opcion == JOptionPane.YES_OPTION) {
+        modelo.eliminar(filaModelo);
+    }
+}
+
+// DialogContacto.java
+public class DialogContacto extends javax.swing.JDialog {
+    private VentanaAgenda ventanaPadre;
+
+    public DialogContacto(VentanaAgenda padre, boolean modal) {
+        super(padre, modal);
+        initComponents();
+        ventanaPadre = padre;
+        setLocationRelativeTo(padre);
+    }
+
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+        String nombre = jTextFieldNombre.getText().trim();
+        String telefono = jTextFieldTelefono.getText().trim();
+
+        if (nombre.isEmpty() || !telefono.matches("\\\\d{9}")) {
+            JOptionPane.showMessageDialog(this, "Nombre obligatorio y teléfono de 9 dígitos");
+            return;
+        }
+
+        ventanaPadre.recibirContacto(new Contacto(nombre, telefono));
+        dispose();
+    }
+}</code></pre>
+                </article>
+
+                <!-- SOLUCIÓN 8 -->
+                <article class="bg-white rounded-xl p-6 shadow-sm border border-emerald-200 space-y-3">
+                    <h3 class="font-bold text-slate-900">Solución 8. Registro de astronautas</h3>
+                    <p class="text-xs text-slate-500">Categoría calculada en getValueAt() y alta desde un JDialog.</p>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code>// Astronauta.java
+public class Astronauta {
+    private String nombre;
+    private int misiones;
+    private int edad;
+
+    public Astronauta(String nombre, int misiones, int edad) {
+        this.nombre = nombre;
+        this.misiones = misiones;
+        this.edad = edad;
+    }
+
+    public String getNombre() { return nombre; }
+    public int getMisiones() { return misiones; }
+    public int getEdad() { return edad; }
+}
+
+// ModeloAstronautas.java
+public class ModeloAstronautas extends javax.swing.table.AbstractTableModel {
+    private ArrayList&lt;Astronauta&gt; lista = new ArrayList&lt;&gt;();
+    private String[] columnas = {"Nombre", "Misiones", "Edad", "Categoría"};
+
+    @Override public int getRowCount() { return lista.size(); }
+    @Override public int getColumnCount() { return columnas.length; }
+    @Override public String getColumnName(int c) { return columnas[c]; }
+
+    @Override
+    public Object getValueAt(int fila, int columna) {
+        Astronauta a = lista.get(fila);
+        switch (columna) {
+            case 0: return a.getNombre();
+            case 1: return a.getMisiones();
+            case 2: return a.getEdad();
+            case 3: return a.getMisiones() &gt;= 3 ? "Veterano" : "Aprendiz";
+            default: return null;
+        }
+    }
+
+    public void anadir(Astronauta a) {
+        lista.add(a);
+        fireTableDataChanged();
+    }
+}
+
+// VentanaAstronautas.java
+private ModeloAstronautas modelo = new ModeloAstronautas();
+
+public VentanaAstronautas() {
+    initComponents();
+    jTable1.setModel(modelo);
+}
+
+public void recibirAstronauta(Astronauta a) {
+    modelo.anadir(a);
+}
+
+private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {
+    new DialogAstronauta(this, true).setVisible(true);
+}
+
+// DialogAstronauta.java
+public class DialogAstronauta extends javax.swing.JDialog {
+    private VentanaAstronautas ventanaPadre;
+
+    public DialogAstronauta(VentanaAstronautas padre, boolean modal) {
+        super(padre, modal);
+        initComponents();
+        ventanaPadre = padre;
+        setLocationRelativeTo(padre);
+    }
+
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {
+        String nombre = jTextFieldNombre.getText().trim();
+        int misiones = (int) jSpinnerMisiones.getValue();
+        int edad = (int) jSpinnerEdad.getValue();
+
+        if (nombre.isEmpty() || misiones &lt; 0 || edad &lt;= 0) {
+            JOptionPane.showMessageDialog(this, "Comprueba los datos");
+            return;
+        }
+
+        ventanaPadre.recibirAstronauta(new Astronauta(nombre, misiones, edad));
+        dispose();
+    }
+}</code></pre>
+                </article>
+
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 text-sm text-amber-950 space-y-2">
+                    <strong><i class="fa-solid fa-circle-info mr-1"></i>Notas para ejecutar los ejemplos</strong>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>Los nombres como <code>jTextFieldNombre</code>, <code>jButtonGuardar</code> o <code>jTable1</code> son nombres que debes asignar a tus componentes en NetBeans, o cambiar en el código.</li>
+                        <li>En cada ventana de NetBeans conserva el método generado <code>initComponents()</code> y conecta cada método <code>ActionPerformed</code> al evento correspondiente.</li>
+                        <li>Añade los imports necesarios, por ejemplo <code>java.util.ArrayList</code>, <code>javax.swing.JOptionPane</code> y <code>javax.swing.table.AbstractTableModel</code>.</li>
+                        <li>En los ejercicios con diálogos, crea el formulario como <code>JDialog Form</code> y utiliza el constructor que recibe la ventana padre y el booleano de modalidad.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ==================== TAB 7: AUTOEVALUACIÓN ==================== -->
         <section id="content-test" class="tab-content hidden space-y-8">
             <div class="bg-rose-900 text-white p-6 rounded-2xl shadow-xl border border-rose-800 flex justify-between items-center">
                 <div>
