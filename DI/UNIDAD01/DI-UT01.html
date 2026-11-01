@@ -88,6 +88,100 @@
         .enlace-animado:hover::after {
             transform: scaleX(1);
         }
+
+        /* Modo oscuro: añadido sin modificar los estilos originales */
+        html.dark {
+            color-scheme: dark;
+            background-color: #0f172a;
+        }
+        html.dark body {
+            background-color: #0f172a !important;
+            color: #e2e8f0 !important;
+        }
+        html.dark a {
+            color: white;
+        }
+        html.dark .enlace-animado {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        html.dark .enlace-animado::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: white;
+            transform-origin: bottom left;
+            transition: transform 0.25s ease-out;
+        }
+        html.dark .enlace-animado:hover::after {
+            transform: scaleX(1);
+        }
+        html.dark main {
+            color: #e2e8f0;
+        }
+        html.dark .bg-white {
+            background-color: #1e293b !important;
+        }
+        html.dark .bg-slate-50 {
+            background-color: #172334 !important;
+        }
+        html.dark .bg-slate-100 {
+            background-color: #263449 !important;
+        }
+        html.dark .text-slate-900,
+        html.dark .text-slate-800 {
+            color: #f1f5f9 !important;
+        }
+        html.dark .text-slate-700,
+        html.dark .text-slate-600 {
+            color: #cbd5e1 !important;
+        }
+        html.dark .text-slate-500 {
+            color: #94a3b8 !important;
+        }
+        html.dark .border-slate-100,
+        html.dark .border-slate-200 {
+            border-color: #334155 !important;
+        }
+        html.dark .divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
+            border-color: #334155 !important;
+        }
+        html.dark input:not([type="radio"]):not([type="checkbox"]),
+        html.dark select,
+        html.dark textarea {
+            background-color: #263449 !important;
+            color: #f1f5f9 !important;
+            border-color: #475569 !important;
+        }
+        html.dark input::placeholder {
+            color: #94a3b8 !important;
+        }
+        html.dark .tab-btn:not(.active) {
+            color: #cbd5e1;
+        }
+        html.dark .tab-btn:not(.active):hover {
+            color: #ffffff;
+        }
+        html.dark .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        html.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+        html.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        .theme-toggle {
+            white-space: nowrap;
+            transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+        }
     </style>
 </head>
 <body>
@@ -108,6 +202,10 @@
             </div>
             
             <div class="flex items-center gap-3 text-xs">
+                <button id="theme-toggle" type="button" onclick="toggleTheme()" class="theme-toggle bg-slate-800 hover:bg-slate-700 text-slate-100 px-3 py-2 rounded-lg border border-slate-700 font-semibold flex items-center gap-2" aria-label="Cambiar a modo oscuro">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
+                    <span id="theme-label">Modo oscuro</span>
+                </button>
                 <span class="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700">
                     <i class="fa-solid fa-cubes text-brand-400 mr-1.5"></i> Unidad Temática 1
                 </span>
@@ -2332,6 +2430,44 @@ public class DialogAstronauta extends javax.swing.JDialog {
                 card.className = "bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3";
             });
             document.getElementById('quiz-score').classList.add('hidden');
+        }
+
+        // Modo claro / modo oscuro
+        function applyTheme(theme) {
+            const isDark = theme === 'dark';
+            document.documentElement.classList.toggle('dark', isDark);
+
+            const icon = document.getElementById('theme-icon');
+            const label = document.getElementById('theme-label');
+            const button = document.getElementById('theme-toggle');
+
+            if (icon && label && button) {
+                icon.className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+                label.textContent = isDark ? 'Modo claro' : 'Modo oscuro';
+                button.setAttribute(
+                    'aria-label',
+                    isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'
+                );
+            }
+        }
+
+        function toggleTheme() {
+            const nextTheme = document.documentElement.classList.contains('dark')
+                ? 'light'
+                : 'dark';
+            applyTheme(nextTheme);
+            try {
+                localStorage.setItem('psp-theme', nextTheme);
+            } catch (e) {
+                // La página sigue funcionando aunque el navegador no permita guardar la preferencia.
+            }
+        }
+
+        // Recuperar la preferencia guardada; por defecto se usa el modo claro.
+        try {
+            applyTheme(localStorage.getItem('psp-theme') || 'light');
+        } catch (e) {
+            applyTheme('light');
         }
     </script>
 </body>
