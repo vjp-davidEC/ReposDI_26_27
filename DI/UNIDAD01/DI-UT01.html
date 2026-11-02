@@ -872,37 +872,273 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
                     <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code id="code-rpg">// Personaje abstracto
 package logica;
 public abstract class Personaje {
-    protected String nombre;
-    protected int fuerza, defensa, vida, vidaMax;
-    public abstract String ataca(Personaje defensor);
-    public boolean vivo() { return vida > 0; }
+    private String nombre;
+    private int fuerza;
+    private int defensa;
+    private int vida;
+    private int vidaMax;
+
+    public Personaje(String nombre, int fuerza, int defensa, int vida) {
+        this.nombre = nombre;
+        this.fuerza = fuerza;
+        this.defensa = defensa;
+        this.vida = vida;
+    }
+    
+    public Personaje() {
+        nombre = "";
+        fuerza = 0;
+        defensa = 0;
+        vida = 0;
+    }
+    
+    //Creo un constructor para poner la Fuerza-Defensa aleatorio y Vida sea 10
+    public Personaje(String nombre) {
+        this.nombre = nombre;
+        Random rand = new Random();
+        fuerza = rand.nextInt(8) + 3;
+        defensa = rand.nextInt(6);
+        vida = 10;
+        vidaMax = 10;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getFuerza() {
+        return fuerza;
+    }
+
+    public void setFuerza(int fuerza) {
+        this.fuerza = fuerza;
+    }
+
+    public int getDefensa() {
+        return defensa;
+    }
+
+    public void setDefensa(int defensa) {
+        this.defensa = defensa;
+    }
+
+    public int getVida() {
+        return vida;
+    }
+
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
+
+    public int getVidaMax() {
+        return vidaMax;
+    }
+
+    public void setVidaMax(int vidaMax) {
+        this.vidaMax = vidaMax;
+    }
+
+    @Override
+    public String toString() {
+        return nombre + " [Fuerza: " + fuerza + ", Defensa: " + defensa + ", Vida: " + vida + "]";
+    }
+    
+    //Metodo que dice que true si es mas de 0 y false si es 0 o menos
+    public boolean vivo() {
+        return vida > 0;
+    }
+
+    public abstract String ataca (Personaje defensor);
+    
     public int calcularDanio(Personaje defensor) {
-        return Math.max(fuerza - defensor.defensa, 1);
+        int danio = fuerza - defensor.getDefensa();
+        return Math.max(danio, 1);
     }
 }
 
-// Subclase Guerrero (ejemplo con bono espada)
+// Subclase Guerrero
 public class Guerrero extends Personaje {
+
     public Guerrero(String nombre) {
         super(nombre);
-        setVida(15); setVidaMax(15);
+        setVida(15);
+        setVidaMax(15);
+        setDefensa(new Random().nextInt(3));
     }
+
     @Override
     public String ataca(Personaje defensor) {
-        int danio = calcularDanio(defensor) + 1;
-        defensor.setVida(defensor.getVida() - danio);
-        return getNombre() + " (Guerrero) golpea con su espada y quita " + danio;
+        Random rand = new Random();
+        if (rand.nextInt(100) < 75) {
+            int danio = calcularDanio(defensor) + 1;
+            defensor.setVida(defensor.getVida() - danio);
+            return getNombre() + " (Guerrero) golpea con su espada a "
+                 + defensor.getNombre() + " y le quita " + danio + " de vida";
+        }
+        return getNombre() + " (Guerrero) falla su espadazo";
+    }
+}
+
+// Subclase Mago
+public class Mago extends Personaje {
+
+    public Mago(String nombre) {
+        super(nombre);
+        setVida(8);
+        setVidaMax(8);
+        setFuerza(new Random().nextInt(8) + 5);
+    }
+
+    @Override
+    public String ataca(Personaje defensor) {
+        Random rand = new Random();
+        if (rand.nextInt(100) < 80) {
+            int danio = getFuerza();
+            if (danio < 1) danio = 1;
+            defensor.setVida(defensor.getVida() - danio);
+            return getNombre() + " (Mago) lanza un hechizo a "
+                 + defensor.getNombre() + " y le quita " + danio + " de vida";
+        }
+        return getNombre() + " (Mago) falla su hechizo";
+    }
+}
+
+//Subclase Arquero
+public class Arquero extends Personaje {
+
+    public Arquero(String nombre) {
+        super(nombre);
+        setVida(10);
+        setVidaMax(10);
+    }
+
+    @Override
+    public String ataca(Personaje defensor) {
+        Random rand = new Random();
+        if (rand.nextInt(100) < 90) {
+            int danio = calcularDanio(defensor);
+            defensor.setVida(defensor.getVida() - danio);
+            return getNombre() + " (Arquero) dispara una flecha certera a "
+                 + defensor.getNombre() + " y le quita " + danio + " de vida";
+        }
+        return getNombre() + " (Arquero) falla el disparo";
+    }
+}
+
+// Subclase JEFE
+public class Jefe extends Personaje {
+
+    public Jefe() {
+        super("JEFE");
+        setVida(20);
+        setVidaMax(20);
+        setFuerza(10);
+        setDefensa(4);
+    }
+
+    @Override
+    public String ataca(Personaje defensor) {
+        Random rand = new Random();
+        if (rand.nextInt(100) < 50) {
+            int danio = calcularDanio(defensor) + 2;
+            defensor.setVida(defensor.getVida() - danio);
+            return getNombre() + " aplasta a " + defensor.getNombre()
+                 + " y le quita " + danio + " de vida";
+        }
+        return "- " + getNombre() + " falla su ataque devastador";
     }
 }
 
 // Selección en VentanaSeleccion.java (interfaz_E3)
-Personaje miPersonaje;
-if (clase.equals("Guerrero")) miPersonaje = new Guerrero(nombre);
-else if (clase.equals("Mago")) miPersonaje = new Mago(nombre);
-else miPersonaje = new Arquero(nombre);
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    String nombre = jTextField1.getText().trim();
+    String clase = (String) jComboBox1.getSelectedItem();
+        
+    if (nombre.isEmpty()) {
+        jLabel3.setText("Error: Escribe un nombre para continuar");
+    } else {
+        jLabel3.setText("");
+            
+        Personaje miPersonaje;
+        if (clase.equals("Guerrero")) {
+            miPersonaje = new Guerrero(nombre);
+        } else if (clase.equals("Mago")) {
+            miPersonaje = new Mago(nombre);
+        } else {
+            miPersonaje = new Arquero(nombre);
+        }
+            
+        new VentanaCombate(miPersonaje).setVisible(true);
+        this.dispose();
+        }
+}
 
-new VentanaCombate(miPersonaje).setVisible(true);
-this.dispose();</code></pre>
+// Selección en VentanaCombate.java
+public class VentanaCombate extends javax.swing.JFrame {
+
+    private Personaje heroe;
+    private Jefe jefe;
+    
+    /**
+     * Creates new form VentanaCombate
+     */
+    public VentanaCombate(Personaje heroe) {
+        this.heroe = heroe;
+        jefe = new Jefe();
+        initComponents();
+        jTextArea1.setEditable(false);
+        jButton2.setVisible(false);
+        actualizarStats();
+        log("¡" + heroe.getNombre() + " el " + heroe.getClass().getSimpleName() + " se enfrenta al " + jefe.getNombre() + "!");
+    }
+
+    --MAS TEXTO--
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        log(heroe.ataca(jefe));
+        actualizarStats();
+        
+        if (!jefe.vivo()) {
+            log("\n --" + heroe.getNombre() + " GANA LA BATALLA--");
+            jButton1.setEnabled(false);
+            jButton2.setVisible(true);
+        } else {
+            log(jefe.ataca(heroe));
+            actualizarStats();
+            
+            if (!heroe.vivo()) {
+                log("\n --" + jefe.getNombre() + " GANA LA BATALLA--");
+                jButton1.setEnabled(false);
+                jButton2.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new VentanaSeleccion().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void actualizarStats() {
+        jLabel3.setText("Fuerza: " + heroe.getFuerza());
+        jLabel4.setText("Defensa: " + heroe.getDefensa());
+        jLabel5.setText("Vida: " + heroe.getVida());
+            
+        jLabel6.setText("Fuerza: " + jefe.getFuerza());
+        jLabel7.setText("Defensa: " + jefe.getDefensa());
+        jLabel8.setText("Vida: " + jefe.getVida());
+    }
+    
+    private void log(String mensaje) {
+        jTextArea1.append(mensaje + "\n");
+        jTextArea1.setCaretPosition(jTextArea1.getDocument().getLength());
+    }
+}
+</code></pre>
 <a href="Diseño/VentanaSeleccion-VentanaCombate.pdf" class="enlace-animado">VentanaSeleccion-VentanaCombate</a>
                 </div>
             </div>
@@ -1484,27 +1720,6 @@ if (index != -1) {
                 <div class="bg-slate-50 rounded-lg p-3 text-xs text-slate-600"><strong>Componentes:</strong> JTextField × 2, JComboBox, JButton, JTextArea.</div>
             </article>
 
-            <!-- REPASO 3 -->
-            <article class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
-                <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
-                    <span class="bg-cyan-100 text-cyan-800 rounded-lg px-3 py-1 font-bold text-sm">3</span>
-                    <div>
-                        <h3 class="font-bold text-slate-900">Combate de personajes</h3>
-                        <p class="text-xs text-slate-500">Herencia, clase abstracta y polimorfismo.</p>
-                    </div>
-                </div>
-                <p class="text-sm text-slate-700">Crea una aplicación sencilla para elegir un personaje y realizar un ataque contra un enemigo.</p>
-                <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1">
-                    <li>Define una clase abstracta <code>Personaje</code> con nombre, fuerza y vida.</li>
-                    <li>Declara el método abstracto <code>ataca(Personaje objetivo)</code> y un método <code>vivo()</code>.</li>
-                    <li>Crea las subclases <code>Guerrero</code>, <code>Mago</code> y <code>Arquero</code>, cada una con una forma de atacar.</li>
-                    <li>Utiliza un <code>JComboBox</code> para seleccionar el tipo de personaje y crea el objeto correspondiente.</li>
-                    <li>Al pulsar «Atacar», ejecuta el método polimórfico y muestra el resultado en un <code>JTextArea</code>.</li>
-                    <li>Evita que un personaje sin vida pueda seguir participando en el combate.</li>
-                </ul>
-                <div class="bg-slate-50 rounded-lg p-3 text-xs text-slate-600"><strong>Componentes:</strong> JTextField, JComboBox, JButton, JTextArea, JLabel.</div>
-            </article>
-
             <!-- REPASO 4 -->
             <article class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
                 <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
@@ -1732,104 +1947,6 @@ private void mostrarCatalogo() {
         jTextAreaCatalogo.append(v + "\n");
     }
     jTextAreaCatalogo.append("\nTotal: " + catalogo.size());
-}</code></pre>
-                </article>
-
-                <!-- SOLUCIÓN 3 -->
-                <article class="bg-white rounded-xl p-6 shadow-sm border border-emerald-200 space-y-3">
-                    <h3 class="font-bold text-slate-900">Solución 3. Combate de personajes</h3>
-                    <p class="text-xs text-slate-500">Clase abstracta y tres subclases. Ejemplo sencillo de polimorfismo.</p>
-                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto"><code>// Personaje.java
-public abstract class Personaje {
-    protected String nombre;
-    protected int fuerza;
-    protected int vida;
-
-    public Personaje(String nombre, int fuerza, int vida) {
-        this.nombre = nombre;
-        this.fuerza = fuerza;
-        this.vida = vida;
-    }
-
-    public boolean vivo() { return vida > 0; }
-    public String getNombre() { return nombre; }
-
-    public abstract String ataca(Personaje objetivo);
-}
-
-// Guerrero.java
-public class Guerrero extends Personaje {
-    public Guerrero(String nombre) { super(nombre, 8, 30); }
-
-    @Override
-    public String ataca(Personaje objetivo) {
-        int danio = fuerza;
-        objetivo.vida = Math.max(0, objetivo.vida - danio);
-        return nombre + " golpea con su espada. Daño: " + danio;
-    }
-}
-
-// Mago.java
-public class Mago extends Personaje {
-    public Mago(String nombre) { super(nombre, 10, 20); }
-
-    @Override
-    public String ataca(Personaje objetivo) {
-        int danio = fuerza;
-        objetivo.vida = Math.max(0, objetivo.vida - danio);
-        return nombre + " lanza un hechizo. Daño: " + danio;
-    }
-}
-
-// Arquero.java
-public class Arquero extends Personaje {
-    public Arquero(String nombre) { super(nombre, 7, 25); }
-
-    @Override
-    public String ataca(Personaje objetivo) {
-        int danio = fuerza;
-        objetivo.vida = Math.max(0, objetivo.vida - danio);
-        return nombre + " dispara una flecha. Daño: " + danio;
-    }
-}
-
-// En la ventana: atributos de clase
-private Personaje jugador;
-private Personaje enemigo = new Guerrero("Enemigo");
-
-// Botón Crear personaje
-private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {
-    String nombre = jTextFieldNombre.getText().trim();
-    if (nombre.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Escribe un nombre");
-        return;
-    }
-
-    String tipo = jComboBoxTipo.getSelectedItem().toString();
-    if (tipo.equals("Guerrero")) jugador = new Guerrero(nombre);
-    else if (tipo.equals("Mago")) jugador = new Mago(nombre);
-    else jugador = new Arquero(nombre);
-
-    jTextAreaCombate.setText("Has creado un " + tipo + ": " + nombre);
-}
-
-// Botón Atacar
-private void jButtonAtacarActionPerformed(java.awt.event.ActionEvent evt) {
-    if (jugador == null) {
-        JOptionPane.showMessageDialog(this, "Primero crea tu personaje");
-        return;
-    }
-    if (!jugador.vivo() || !enemigo.vivo()) {
-        JOptionPane.showMessageDialog(this, "El combate ha terminado");
-        return;
-    }
-
-    jTextAreaCombate.append("\n" + jugador.ataca(enemigo));
-    if (!enemigo.vivo()) {
-        jTextAreaCombate.append("\n¡Has ganado!");
-    } else {
-        jTextAreaCombate.append("\nVida del enemigo: " + enemigo.vida);
-    }
 }</code></pre>
                 </article>
 
