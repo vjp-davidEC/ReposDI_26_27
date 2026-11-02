@@ -67,7 +67,7 @@
             background-color: #19A349;
         }
         .enlace-animado {
-            color: #0f172a;
+            color: white;
             text-decoration: none;
             font-weight: 600;
             position: relative;
@@ -81,7 +81,7 @@
             height: 2px;
             bottom: -2px;
             left: 0;
-            background-color: #0f172a;
+            background-color: white;
             transform-origin: bottom left;
             transition: transform 0.25s ease-out;
         }
@@ -100,28 +100,6 @@
         }
         html.dark a {
             color: white;
-        }
-        html.dark .enlace-animado {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            position: relative;
-            transition: color 0.3s ease;
-        }
-        html.dark .enlace-animado::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            transform: scaleX(0);
-            height: 2px;
-            bottom: -2px;
-            left: 0;
-            background-color: white;
-            transform-origin: bottom left;
-            transition: transform 0.25s ease-out;
-        }
-        html.dark .enlace-animado:hover::after {
-            transform: scaleX(1);
         }
         html.dark main {
             color: #e2e8f0;
@@ -523,7 +501,7 @@
             <div class="bg-amber-900 text-white p-6 rounded-2xl shadow-xl border border-amber-800 flex justify-between items-center">
                 <div>
                     <h2 class="text-2xl font-extrabold mb-1 flex items-center gap-3">
-                        <i class="fa-solid fa-laptop-code text-amber-400"></i> Prácticas Oficiales UT1 (Java Swing)
+                        <i class="fa-solid fa-laptop-code text-amber-400"></i> Prácticas Oficiales UT1 (Java Swing) - <a href="EJERCICIOS-DI-JAVA/" class="enlace-animado blanco">EJERCICIOS TEMA</a>
                     </h2>
                     <p class="text-amber-100 text-xs">
                         Código fuente completo y estructurado correspondiente a las Prácticas 1.1, 1.2, 1.3 y 1.4.
@@ -571,7 +549,6 @@ public class VentanaSaludo extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new VentanaSaludo().setVisible(true));
     }
 }</code></pre>
-<a href="Diseño/VentanaSaludo.pdf" class="enlace-animado">VentanaSaludo</a>
                 </div>
 
                 <!-- VentanaLogin -->
@@ -608,7 +585,6 @@ public class VentanaLogin extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new VentanaLogin().setVisible(true));
     }
 }</code></pre>
-<a href="Diseño/VentanaLogin.pdf" class="enlace-animado">VentanaLogin</a>
                 </div>
 
                 <!-- VentanaCalculadora -->
@@ -646,7 +622,6 @@ public class VentanaCalculadora extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new VentanaCalculadora().setVisible(true));
     }
 }</code></pre>
-<a href="Diseño/VentanaCalculadora.pdf" class="enlace-animado">VentanaCalculadora</a>
                 </div>
             </div>
 
@@ -711,7 +686,6 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         Result.setText("El numero de paginas debe ser un numero entero");
     }
 }</code></pre>
-<a href="Diseño/VentanaLibro.pdf" class="enlace-animado">VentanaLibro</a>
                 </div>
 
                 <!-- SumadorPares + VentanaSumador -->
@@ -755,7 +729,6 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         Resultado.setText("Error: Debe de ser un numero entero");
     }
 }</code></pre>
-<a href="Diseño/VentanaSumador.pdf" class="enlace-animado">VentanaSumador</a>
                 </div>
 
                 <!-- Personaje + VentanaWarcraft -->
@@ -811,7 +784,6 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         }
     }
 }</code></pre>
-<a href="Diseño/VentanaWarcraft.pdf" class="enlace-animado">VentanaWarcraft</a>
                 </div>
             </div>
 
@@ -855,7 +827,6 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         jTextArea1.setText("Páginas debe ser un número entero");
     }
 }</code></pre>
-<a href="Diseño/VentanaCatálogo.pdf" class="enlace-animado">VentanaCatálogo</a>
                 </div>
 
                 <!-- Polimorfismo: Personaje, Guerrero, Mago, Arquero, Jefe -->
@@ -1139,7 +1110,6 @@ public class VentanaCombate extends javax.swing.JFrame {
     }
 }
 </code></pre>
-<a href="Diseño/VentanaSeleccion-VentanaCombate.pdf" class="enlace-animado">VentanaSeleccion-VentanaCombate</a>
                 </div>
             </div>
 
@@ -1482,7 +1452,6 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         this.dispose();
     }
 }</code></pre>
-<a href="Diseño/VentanaPrincipal-Registro.pdf" class="enlace-animado">VentanaPrincipal-Registro</a>
                 </div>
 
                 <!-- VentanaTablero 3x3 -->
@@ -1509,7 +1478,6 @@ private void pulsarCasilla(javax.swing.JButton boton) {
     boton.setEnabled(false);
     turno = !turno;
 }</code></pre>
-<a href="Diseño/VentanaTablero.pdf" class="enlace-animado">VentanaTablero</a>
                 </div>
 
                 <!-- VentanaAgenda con DefaultTableModel -->
@@ -1538,7 +1506,6 @@ if (fila != -1) {
         jLabel1.setText("Contactos: " + modelo.getRowCount());
     }
 }</code></pre>
-<a href="Diseño/VentanaAgenda.pdf" class="enlace-animado">VentanaAgenda</a>
                 </div>
 
                 <!-- VentanaUsuario -->
@@ -1568,7 +1535,6 @@ if (fila != -1) {
     }
     JOptionPane.showMessageDialog(this, "Bienvenido, " + usuario + " (" + boxCurso.getSelectedItem() + ")");
 }</code></pre>
-<a href="Diseño/VentanaUsuario.pdf" class="enlace-animado">VentanaUsuario</a>
                 </div>
 
                 <!-- VentanaPropina -->
@@ -1599,7 +1565,6 @@ private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {
     jLabel2.setText("Propina: " + jSlider1.getValue() + " %");
     actualizarTotal();
 }</code></pre>
-<a href="Diseño/VentanaPropina.pdf" class="enlace-animado">VentanaPropina</a>
                 </div>
 
                 <!-- VentanaPin -->
@@ -1629,7 +1594,6 @@ private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {
         }
     }
 }</code></pre>
-<a href="Diseño/VentanaPin.pdf" class="enlace-animado">VentanaPin</a>
                 </div>
 
                 <!-- VentanaTareas -->
@@ -1657,7 +1621,6 @@ if (index != -1) {
     modelo.remove(index);
     jLabel1.setText("Pendientes: " + modelo.size());
 }</code></pre>
-<a href="Diseño/VentanaTareas.pdf" class="enlace-animado">VentanaTareas</a>
                 </div>
             </div>
         </section>
