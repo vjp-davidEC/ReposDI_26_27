@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package miscomponentes;
+package ejercicio01;
 
 /**
  *
@@ -32,7 +32,7 @@ public class Ejercicio01 extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        botonContador1 = new miscomponentes.BotonContador();
+        botonContador1 = new ejercicio01.BotonContador();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,7 +102,7 @@ public class Ejercicio01 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private miscomponentes.BotonContador botonContador1;
+    private ejercicio01.BotonContador botonContador1;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
