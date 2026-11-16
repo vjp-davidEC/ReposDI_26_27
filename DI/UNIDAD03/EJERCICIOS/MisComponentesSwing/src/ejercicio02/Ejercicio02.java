@@ -4,16 +4,14 @@
  */
 package ejercicio02;
 
-import javax.swing.JOptionPane;
-
 /**
  *
- * @author DAVID
+ * @author alumno
  */
 public class Ejercicio02 extends javax.swing.JFrame {
 
     /**
-     * Creates new form Ejercicio02
+     * Creates new form Ejercicio02_Principal
      */
     public Ejercicio02() {
         initComponents();
@@ -31,40 +29,13 @@ public class Ejercicio02 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         campoEmail1 = new ejercicio02.CampoEmail();
-        jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jPanel1.setLayout(new java.awt.BorderLayout());
-        jPanel1.add(campoEmail1, java.awt.BorderLayout.CENTER);
-
-        getContentPane().add(jPanel1, java.awt.BorderLayout.NORTH);
-
-        jPanel2.setLayout(new java.awt.BorderLayout());
-
-        jButton1.setText("Comprobar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton1, java.awt.BorderLayout.CENTER);
-
-        getContentPane().add(jPanel2, java.awt.BorderLayout.SOUTH);
+        getContentPane().add(campoEmail1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (campoEmail1.isEmailValido()) {
-            JOptionPane.showMessageDialog(this, "¡El correo electronico es valido!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "¡El correo electronico no es valido!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -92,6 +63,7 @@ public class Ejercicio02 extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Ejercicio02.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -103,8 +75,5 @@ public class Ejercicio02 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private ejercicio02.CampoEmail campoEmail1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
