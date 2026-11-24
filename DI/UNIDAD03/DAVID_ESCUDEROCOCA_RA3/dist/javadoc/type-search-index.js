@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"examen","l":"JButtonAlert"},{"p":"examen","l":"PanelControlAforo"},{"p":"examen","l":"VentanaPrueba"}];updateSearchResults();
